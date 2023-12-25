@@ -100,11 +100,13 @@ await manager.addProduct("lavadora", "lava secadora", 85.000, "sin imagen", 1285
 await manager.addProduct("lavador", "lavador  verde", 58.000, "sin imagen", 1289, 10);
 
 /* Producto con igual code para comprobar errores */
+
 await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170); 
 
-/* await manager.getProducts();  */
+/* probando ver lista de productos en general */
+await manager.getProducts(); 
 
-/* Probando busqueda con ID */
+/* Probando busqueda con ID, por true y por false*/
 
 await manager.getProductById(1);
 await manager.getProductById(5); 
