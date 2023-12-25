@@ -80,7 +80,7 @@ class ProductManager {
     }
 
     /* modificar el archivo existente sin cambiarle el ID */
-    productosActualizados = async ({id, ...producto}) =>{
+    updateProduct = async ({id, ...producto}) =>{
         await this.deleteProductsById(id);
         let productOld = await this.readProducts();
         let productoModificado = [
@@ -117,7 +117,7 @@ await manager.deleteProductsById(1)
 
 /* Probando modificar un producto */
 
-await manager.productosActualizados({
+await manager.updateProduct({
     id: 2,
     title: 'lavadora',
     description: 'lava secadora',       
