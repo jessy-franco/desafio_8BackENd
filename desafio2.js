@@ -100,22 +100,22 @@ await manager.addProduct("lavadora", "lava secadora", 85.000, "sin imagen", 1285
 await manager.addProduct("lavador", "lavador  verde", 58.000, "sin imagen", 1289, 10);
 
 /* Producto con igual code para comprobar errores */
-/* await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170); */
+await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170); 
 
 /* await manager.getProducts();  */
 
 /* Probando busqueda con ID */
 
-/* await manager.getProductById(1);
-await manager.getProductById(5); */
+await manager.getProductById(1);
+await manager.getProductById(5); 
 
 /* Probando eliminar productos por id */
 
-/* manager.deleteProductsById(2) */
+await manager.deleteProductsById(1) 
 
 /* Probando modificar un producto */
 
-manager.productosActualizados({
+await manager.productosActualizados({
     id: 2,
     title: 'lavadora',
     description: 'lava secadora',       
