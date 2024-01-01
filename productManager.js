@@ -79,25 +79,28 @@ class ProductManager {
 
     }
 
-    /* modificar el archivo existente sin cambiarle el ID */
-    updateProduct = async ({id, ...producto}) =>{
-        await this.deleteProductsById(id);
-        let productOld = await this.readProducts();
-        let productoModificado = [
-            {id, ...producto},
-            ...productOld
-        ];
-        await fs.writeFile(this.patch, JSON.stringify(productoModificado))
-        console.log(productoModificado)
+    /* Modificar el archivo existente sin cambiarle el ID */
+    updateProduct = async ({ id, ...updatedFields }) => {
+        const products = await this.readProducts();
+        const updatedProducts = products.map(product => {
+            if (product.id === id) {
+                return { ...product, ...updatedFields };
+            }
+            return product;
+        });
+
+        await fs.writeFile(this.patch, JSON.stringify(updatedProducts));
+        console.log("Producto actualizado:", updatedProducts);
+    
     }
 
 }
 
 /* Agregando productos y mostrandolos en la consola */
 const manager = new ProductManager();
-await manager.addProduct("aspiradora", "aspiradora de solidos y liquidos", 250.000, "sin imagen", 1224, 25);
-await manager.addProduct("lavadora", "lava secadora", 85.000, "sin imagen", 1285, 30);
-await manager.addProduct("lavador", "lavador  verde", 58.000, "sin imagen", 1289, 10);
+await manager.addProduct("aspiradora", "aspiradora de solidos y liquidos", 250000, "sin imagen", 1224, 25);
+await manager.addProduct("lavadora", "lava secadora", 85000, "sin imagen", 1285, 30);
+await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289, 10);
 
 /* Producto con igual code para comprobar errores */
 
@@ -121,7 +124,7 @@ await manager.updateProduct({
     id: 2,
     title: 'lavadora',
     description: 'lava secadora',       
-    price: 90.000,
+    price: 120000,
     thumbnail: 'sin imagen',
     code: 1285,
     stock: 80
