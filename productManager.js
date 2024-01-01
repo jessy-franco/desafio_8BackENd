@@ -122,10 +122,6 @@ await manager.deleteProductsById(1)
 
 await manager.updateProduct({
     id: 2,
-    title: 'lavadora',
-    description: 'lava secadora',       
-    price: 120000,
-    thumbnail: 'sin imagen',
-    code: 1285,
-    stock: 80
+    price: 500000,
+    
 });
