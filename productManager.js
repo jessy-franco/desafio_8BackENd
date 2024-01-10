@@ -121,7 +121,7 @@ await manager.deleteProductsById(1)
 /* Probando modificar un producto */
 
 await manager.updateProduct({
-    id: 2,
-    price: 500000,
+    id: 3,
+    price: 77000,
     
 });
