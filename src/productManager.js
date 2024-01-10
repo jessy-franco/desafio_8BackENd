@@ -49,7 +49,7 @@ class ProductManager {
     getProductById = async (id) => {
         const respuesta3 = await this.readProducts();
         const product = respuesta3.find(product => product.id === id);
-    
+
         if (product) {
             console.log("Producto encontrado:", product);
             return product;
@@ -60,9 +60,12 @@ class ProductManager {
     };
 
     /* Crear esta funcion */
-    getProductLimit = async (x) =>{
-
-    }
+    getProductLimit = async (limit) => {
+        const products = await this.readProducts();
+        const limitedProducts = products.slice(0, limit);
+        console.log(`Mostrando los primeros ${limit} productos:`, limitedProducts);
+        return limitedProducts;
+    };
 
     /* Borrar un producto por ID
      */
@@ -100,23 +103,24 @@ class ProductManager {
 
         await fs.writeFile(this.patch, JSON.stringify(updatedProducts));
         console.log("Producto actualizado:", updatedProducts);
-    
+
     }
 
 }
 
 /* Agregando productos y mostrandolos en la consola */
-/* const manager = new ProductManager();
+
+const manager = new ProductManager();
 await manager.addProduct("aspiradora", "aspiradora de solidos y liquidos", 250000, "sin imagen", 1224, 25);
 await manager.addProduct("lavadora", "lava secadora", 85000, "sin imagen", 1285, 30);
-await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289, 10); */
+await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289, 10); 
 
 /* Producto con igual code para comprobar errores */
 
 /* await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170);  */
 
 /* probando ver lista de productos en general */
-/* await manager.getProducts();  */
+await manager.getProducts(); 
 
 /* Probando busqueda con ID, por true y por false*/
 /* 

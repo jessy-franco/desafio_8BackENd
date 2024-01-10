@@ -4,24 +4,25 @@ import ProductManager from "./productManager.js";
 const productManager = new ProductManager();
 const app = express();
 
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 
 app.get("/products", async (req, res) => {
-    try{
-        const products = await productManager.getProducts()
-        res.send(products);
-        /* if(req.query.limit){
-            productManager.getProductLimit(limit)
+    try {
+        let products;
+        if (req.query.limit) {
+            const limit = parseInt(req.query.limit);
+            products = await productManager.getProductLimit(limit);
+        } else {
+            products = await productManager.getProducts();
         }
-        else{
-            productManager.getProducts()
-        } */
+
+        res.send(products);
     }
-    catch (error){
+    catch (error) {
         console.error("Error al obtener productos:", error);
         res.status(500).send("Error interno del servidor");
     };
-    
+
 });
 
 
@@ -45,6 +46,6 @@ app.get("/products/:id", async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
+app.listen(6000, () => {
     console.log("servidor 3000!");
 });
