@@ -1,0 +1,1 @@
+[{"id":1,"title":"aspiradora","description":"aspiradora de solidos y liquidos","price":250000,"thumbnail":"sin imagen","code":1224,"stock":25},{"id":3,"title":"lavador","description":"lavador  verde","price":77000,"thumbnail":"sin imagen","code":1289,"stock":10}]

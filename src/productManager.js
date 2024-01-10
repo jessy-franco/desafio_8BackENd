@@ -39,6 +39,7 @@ class ProductManager {
         try {
             const respuesta2 = await this.readProducts();
             console.log("La lista de productos es la siguiente: ", respuesta2);
+            return respuesta2;
         }
         catch (error) {
             console.error("ERROR al leer el archivo:", error);
@@ -47,13 +48,21 @@ class ProductManager {
 
     getProductById = async (id) => {
         const respuesta3 = await this.readProducts();
-        const products = respuesta3.find(product => product.id === id);
-        if (products) {
-            console.log("Producto encontrado:", products);
+        const product = respuesta3.find(product => product.id === id);
+    
+        if (product) {
+            console.log("Producto encontrado:", product);
+            return product;
         } else {
             console.error("Producto no encontrado");
+            return undefined;
         }
     };
+
+    /* Crear esta funcion */
+    getProductLimit = async (x) =>{
+
+    }
 
     /* Borrar un producto por ID
      */
@@ -97,31 +106,34 @@ class ProductManager {
 }
 
 /* Agregando productos y mostrandolos en la consola */
-const manager = new ProductManager();
+/* const manager = new ProductManager();
 await manager.addProduct("aspiradora", "aspiradora de solidos y liquidos", 250000, "sin imagen", 1224, 25);
 await manager.addProduct("lavadora", "lava secadora", 85000, "sin imagen", 1285, 30);
-await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289, 10);
+await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289, 10); */
 
 /* Producto con igual code para comprobar errores */
 
-await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170); 
+/* await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170);  */
 
 /* probando ver lista de productos en general */
-await manager.getProducts(); 
+/* await manager.getProducts();  */
 
 /* Probando busqueda con ID, por true y por false*/
-
+/* 
 await manager.getProductById(1);
-await manager.getProductById(5); 
+await manager.getProductById(5);  */
 
 /* Probando eliminar productos por id */
 
-await manager.deleteProductsById(1) 
+/* await manager.deleteProductsById(2)  */
 
 /* Probando modificar un producto */
 
-await manager.updateProduct({
+/* await manager.updateProduct({
     id: 3,
     price: 77000,
     
-});
+}); */
+
+
+export default ProductManager;
