@@ -48,8 +48,8 @@ class ProductManager {
 
     getProductById = async (id) => {
         const respuesta3 = await this.readProducts();
-        const product = respuesta3.find(product => product.id === id);
-
+        const product = respuesta3.find(product => product.id === parseInt(id));
+    
         if (product) {
             console.log("Producto encontrado:", product);
             return product;
@@ -58,7 +58,7 @@ class ProductManager {
             return undefined;
         }
     };
-
+    
     /* Crear esta funcion */
     getProductLimit = async (limit) => {
         const products = await this.readProducts();

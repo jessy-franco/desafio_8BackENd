@@ -32,6 +32,7 @@ app.get("/products/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const product = await productManager.getProductById(id);
+        console.log("ID recibido:", id);
 
         if (product) {
             console.log("Producto encontrado:", product);
@@ -46,6 +47,6 @@ app.get("/products/:id", async (req, res) => {
     }
 });
 
-app.listen(6000, () => {
+app.listen(3000, () => {
     console.log("servidor 3000!");
 });
