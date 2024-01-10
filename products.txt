@@ -1,1 +1,0 @@
-[{"id":2,"title":"lavadora","description":"lava secadora","price":85000,"thumbnail":"sin imagen","code":1285,"stock":30},{"id":3,"title":"lavador","description":"lavador  verde","price":77000,"thumbnail":"sin imagen","code":1289,"stock":10}]
