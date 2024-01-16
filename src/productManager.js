@@ -6,7 +6,7 @@ class ProductManager {
     patch;
 
     constructor() {
-        this.patch = "./products.txt";
+        this.patch = "./products.json";
     }
 
     addProduct = async (title, description, price, thumbnail, code, stock) => {
