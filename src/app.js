@@ -1,9 +1,17 @@
 import express from "express";
 import ProductManager from "./productManager.js";
+import router from "./routes/usersRouter.js"
 
 const productManager = new ProductManager();
 const app = express();
+const routerUsers= router
 
+/* middlewares */
+app.use(express.json());
+app.use("/static",express.static(__dirname + "/public"))
+
+/* routers */
+app.use("/users" ,routerUsers)
 app.use(express.urlencoded({ extended: true }))
 
 app.get("/products", async (req, res) => {
