@@ -17,10 +17,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jessy-franco/desafio3BackEnd.git"
+    "url": "git+https://github.com/jessy-franco/clase8-backend.git"
   },
   "bugs": {
-    "url": "https://github.com/jessy-franco/desafio3BackEnd/issues"
+    "url": "https://github.com/jessy-franco/clase8-backend/issues"
   },
-  "homepage": "https://github.com/jessy-franco/desafio3BackEnd#readme"
+  "homepage": "https://github.com/jessy-franco/clase8-backend#readme"
 }
