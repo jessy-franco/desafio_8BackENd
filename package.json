@@ -1,8 +1,8 @@
 {
   "type": "module",
-  "name": "clase8",
+  "name": "preentrega",
   "version": "1.0.0",
-  "description": "clase 8 de backend",
+  "description": "primera pre entrega",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -17,10 +17,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jessy-franco/clase8-backend.git"
+    "url": "git+https://github.com/jessy-franco/preEntrega1.git"
   },
   "bugs": {
-    "url": "https://github.com/jessy-franco/clase8-backend/issues"
+    "url": "https://github.com/jessy-franco/preEntrega1/issues"
   },
-  "homepage": "https://github.com/jessy-franco/clase8-backend#readme"
+  "homepage": "https://github.com/jessy-franco/preEntrega1#readme"
 }

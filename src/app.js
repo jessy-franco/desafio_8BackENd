@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/static",express.static(__dirname + "/public"))
 
 /* routers */
-app.use("/users" ,routerUsers)
+app.use("/api/users/" ,routerUsers)
 app.use(express.urlencoded({ extended: true }))
 
 app.get("/products", async (req, res) => {
