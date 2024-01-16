@@ -2,16 +2,25 @@
   "type": "module",
   "name": "clase8",
   "version": "1.0.0",
-  "description": "Desafio 2 de backend",
-  "main": "desafio2.js",
+  "description": "clase 8 de backend",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "jesica franco",
   "license": "ISC",
   "keywords": [],
   "dependencies": {
     "express": "^4.18.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessy-franco/desafio3BackEnd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jessy-franco/desafio3BackEnd/issues"
+  },
+  "homepage": "https://github.com/jessy-franco/desafio3BackEnd#readme"
 }
