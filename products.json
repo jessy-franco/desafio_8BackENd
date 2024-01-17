@@ -1,1 +1,46 @@
-[{"id":1,"title":"aspiradora","description":"aspiradora de solidos y liquidos","price":250000,"thumbnail":"sin imagen","code":1224,"stock":25},{"id":2,"title":"lavadora","description":"lava secadora","price":85000,"thumbnail":"sin imagen","code":1285,"stock":30},{"id":3,"title":"lavador","description":"lavador  verde","price":58000,"thumbnail":"sin imagen","code":1289,"stock":10}]
+[
+  {
+    "title": "mueble de madera",
+    "code": "dhgjjgfjt",
+    "description": "madera de roble",
+    "price": 12879.9,
+    "stock": 18,
+    "category": "Deco",
+    "thumbnails": [],
+    "status": true,
+    "id": 1
+  },
+  {
+    "title": "sifon de cocina antiguo",
+    "code": "opñjghjrfh",
+    "description": "de roble",
+    "price": 86879.9,
+    "stock": 8,
+    "category": "Deco",
+    "thumbnails": [],
+    "status": true,
+    "id": 2
+  },
+  {
+    "title": "pelota",
+    "code": "dfgdfgdfgdfg",
+    "description": "fdgdfgfdg",
+    "price": 56.99,
+    "stock": 10,
+    "category": "Electrónicos",
+    "thumbnails": [],
+    "status": true,
+    "id": 5
+  },
+  {
+    "title": "impresora 3d",
+    "code": "yuiyuyih",
+    "description": "de plastico",
+    "price": 896545.9,
+    "stock": 28,
+    "category": "tecno",
+    "thumbnails": [],
+    "status": true,
+    "id": 9
+  }
+]

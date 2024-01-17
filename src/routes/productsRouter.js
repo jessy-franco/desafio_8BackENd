@@ -5,7 +5,7 @@ const products = Router();
 const productManager = new ProductManager();
 
 
-products.get("/products", async (req, res) => {
+products.get("/", async (req, res) => {
     try {
         let products;
         if (req.query.limit) {
@@ -24,7 +24,7 @@ products.get("/products", async (req, res) => {
 
 });
 
-products.get("/products/:id", async (req, res) => {
+products.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const product = await productManager.getProductById(id);
@@ -43,8 +43,7 @@ products.get("/products/:id", async (req, res) => {
     }
 });
 
-products.post("/products", async (req, res) => {
-
+products.post("/", async (req, res) => {
     try {
         const {
             title,
@@ -56,11 +55,12 @@ products.post("/products", async (req, res) => {
             thumbnails, } = req.body;
         if (title && description && code && price && stock && category) {
             const newProduct = {
-                title, description, code, price, stock, category, thumbnails: thumbnails || [],
+            title, description, code, price, stock, category, thumbnails: thumbnails || [],
                 status: true,
             };
             const addProd = await productManager.addProduct(newProduct);
-            res.status(200).send(addProd);
+            res.status(201).send(addProd);
+            console.log(req.body)
         } else {
             res.status(400).send("Falta completar campos obligatorios")
         }

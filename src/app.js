@@ -17,12 +17,12 @@ app.use(express.json());
 app.use("/static",express.static(__dirname + "/public"))
 
 /* routers */
-app.use("/api/products/" ,routerproducts)
+app.use("/api/products" ,routerproducts)
 /* app.use("/api/carts/" ,routercarts) */
 app.use(express.urlencoded({ extended: true }))
 
 
 
-app.listen(4000, () => {
+app.listen(8080, () => {
     console.log("servidor 8080!");
 });

@@ -12,9 +12,9 @@
   "license": "ISC",
   "keywords": [],
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "uuid": "^9.0.1"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jessy-franco/preEntrega1.git"
