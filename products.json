@@ -1,46 +1,24 @@
 [
   {
-    "title": "mueble de madera",
-    "code": "dhgjjgfjt",
-    "description": "madera de roble",
-    "price": 12879.9,
-    "stock": 18,
-    "category": "Deco",
-    "thumbnails": [],
-    "status": true,
-    "id": 1
-  },
-  {
-    "title": "sifon de cocina antiguo",
-    "code": "opñjghjrfh",
-    "description": "de roble",
-    "price": 86879.9,
-    "stock": 8,
-    "category": "Deco",
-    "thumbnails": [],
-    "status": true,
-    "id": 2
-  },
-  {
     "title": "pelota",
-    "code": "dfgdfgdfgdfg",
-    "description": "fdgdfgfdg",
-    "price": 56.99,
-    "stock": 10,
-    "category": "Electrónicos",
+    "code": "puiukkliy",
+    "description": "de playa roja",
+    "price": 5000,
+    "stock": 24,
+    "category": "hogar",
     "thumbnails": [],
     "status": true,
-    "id": 5
+    "id": "d007a087-daeb-4f0c-8439-c05d0d2b3a11"
   },
   {
-    "title": "impresora 3d",
-    "code": "yuiyuyih",
-    "description": "de plastico",
-    "price": 896545.9,
-    "stock": 28,
-    "category": "tecno",
+    "title": "pileta",
+    "code": "uuuuukky",
+    "description": "de lona azul",
+    "price": 85.789,
+    "stock": 12,
+    "category": "hogar",
     "thumbnails": [],
     "status": true,
-    "id": 9
+    "id": "ff83b507-4191-48fe-a496-0fe9cd1748dc"
   }
 ]

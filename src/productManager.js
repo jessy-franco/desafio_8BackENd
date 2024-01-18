@@ -1,8 +1,7 @@
 import { promises as fs } from "fs";
-
+import { v4 as uuidv4 } from "uuid";
 
 class ProductManager {
-    #id = 0;
     products = [];
     patch;
 
@@ -12,32 +11,31 @@ class ProductManager {
 
     addProduct = async (product) => {
         const { title, code, ...rest } = product;
-        const id = ++this.#id;  
         const newProduct = {
             title,
             code,
             ...rest,
-            id,
+            id: uuidv4(),
         };
 
-        // Validar que no se repita el campo "code"()
+        /* Validar que no se repita el campo "code"() */
         if (!this.codigoUnico(code)) {
             console.error("ERROR: Ya existe un producto con el mismo código, el nuevo producto no será agregado, verifique el código y vuelva a intentarlo");
             return;
         }
 
         try {
-            // Leer el contenido actual del archivo utilizando readProducts
+            /* Leer el contenido actual readProducts */
             const currentProducts = await this.readProducts();
 
-            // Agregar el nuevo producto a la lista existente
+            /* Agregar el nuevo producto a la lista existente */
             currentProducts.push(newProduct);
 
-            // Escribir la lista completa de productos de vuelta al archivo
+            /* Escribir la lista completa de productos de vuelta al archivo */
             await fs.writeFile(this.patch, JSON.stringify(currentProducts, null, 2));
 
-            // Actualizar la lista de productos en la instancia de ProductManager
-            this.products = currentProducts;
+            /* Actualizar la lista de productos de ProductManager */
+            this.products = currentProducts
         } catch (error) {
             console.error("Error al agregar producto:", error);
         }
@@ -66,7 +64,7 @@ class ProductManager {
 
     getProductById = async (id) => {
         const respuesta3 = await this.readProducts();
-        const product = respuesta3.find(product => product.id === parseInt(id));
+        const product = respuesta3.find(product => product.id === id);
 
         if (product) {
             console.log("Producto encontrado:", product);
@@ -77,7 +75,7 @@ class ProductManager {
         }
     };
 
-    /* Crear esta funcion */
+    /* funcion limit?*/
     getProductLimit = async (limit) => {
         const products = await this.readProducts();
         const limitedProducts = products.slice(0, limit);
@@ -125,9 +123,9 @@ class ProductManager {
     }
 }
 
-/* Agregando productos y mostrandolos en la consola */
+/* Agregando productos y mostrandolos en la consola para comprobar funcionalidades */
 
-const manager = new ProductManager();
+/* const manager = new ProductManager(); */
 /* await manager.addProduct("aspiradora", "aspiradora de solidos y liquidos", 250000, "sin imagen", 1224, 25);
 await manager.addProduct("lavadora", "lava secadora", 85000, "sin imagen", 1285, 30);
 await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289, 10);  */
@@ -137,22 +135,22 @@ await manager.addProduct("lavador", "lavador  verde", 58000, "sin imagen", 1289,
 /* await manager.addProduct("lavadojh", "lavadofgfdr  verde", 58.5000, "sin imagen", 1289, 170);  */
 
 /* probando ver lista de productos en general */
-await manager.getProducts();
+/* await manager.getProducts(); */
 
 /* Probando busqueda con ID, por true y por false*/
 
-await manager.getProductById('db8bdd00-5261-45dd-a9af-d8ac903a860b');
-await manager.getProductById(5);  
+/* await manager.getProductById(); */
+
 
 /* Probando eliminar productos por id */
 
-/* await manager.deleteProductsById(2)  */
+   /*  await manager.deleteProductsById("")  */  
 
 /* Probando modificar un producto */
 
 /* await manager.updateProduct({
-    id: 3,
-    price: 77000,
+    id: "e33f06c3-a09d-4be8-b549-ae2825841131",
+    price: 1000000,
     
 }); */
 
