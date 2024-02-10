@@ -1,24 +1,37 @@
 [
-  {
-    "title": "pelota",
-    "code": "puiukkliy",
-    "description": "de playa roja",
-    "price": 5000,
-    "stock": 24,
-    "category": "hogar",
-    "thumbnails": [],
-    "status": true,
-    "id": "d007a087-daeb-4f0c-8439-c05d0d2b3a11"
-  },
-  {
-    "title": "pileta",
-    "code": "uuuuukky",
-    "description": "de lona azul",
-    "price": 85.789,
-    "stock": 12,
-    "category": "hogar",
-    "thumbnails": [],
-    "status": true,
-    "id": "ff83b507-4191-48fe-a496-0fe9cd1748dc"
-  }
+    {
+        "title": "pelota",
+        "code": "puiukkliy",
+        "description": "de playa roja",
+        "price": 5000,
+        "stock": 24,
+        "category": "hogar",
+        "thumbnails": [],
+        "status": true,
+        "id": "d007a087-daeb-4f0c-8439-c05d0d2b3a11"
+    },
+    {
+        "title": "pileta",
+        "code": "uuuuukky",
+        "description": "de lona azul",
+        "price": 85.789,
+        "stock": 12,
+        "category": "hogar",
+        "thumbnails": [],
+        "status": true,
+        "id": "ff83b507-4191-48fe-a496-0fe9cd1748dc"
+    },
+    {
+        "title": "mesa",
+        "code": "puoooooliy",
+        "description": "de madera",
+        "price": 54000,
+        "stock": 4,
+        "category": "hogar",
+        "thumbnails": [
+            "https://http2.mlstatic.com/D_NQ_NP_2X_968441-MLA71657204729_092023-F.webp"
+        ],
+        "status": true,
+        "id": "e96bf9af-3092-474e-b448-c2e02688ac8e"
+    }
 ]

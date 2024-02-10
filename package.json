@@ -1,11 +1,11 @@
 {
   "type": "module",
-  "name": "preentrega1",
+  "name": "integrador",
   "version": "1.0.0",
-  "description": "primera pre entrega",
+  "description": "integrador",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jesica franco",
@@ -13,7 +13,15 @@
   "keywords": [],
   "dependencies": {
     "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.1",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.7.4",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
   },
   "repository": {
     "type": "git",
