@@ -1,82 +1,129 @@
-import { Router } from "express";
-import upload from "../utils/upload.middleware.js"
-import ProductsDAO from "../daos/productsDao.js";
+import express from "express";
+import ProductDAO from "../daos/productsDao.js";
+import multer from "multer";
 
-const products = Router();
+const products = express.Router();
+const upload = multer({ dest: 'src/public/img/products/' });
 
-
-
-/* muestra los prod */
 products.get("/", async (req, res) => {
     try {
         let products;
         let withStock = req.query.stock;
         if (req.query.limit) {
             const limit = parseInt(req.query.limit);
-            products = await ProductsDAO.getProductLimit(limit);
+            products = await ProductDAO.getProductLimit(limit);
         } 
         else if(withStock === undefined){
-            products = await ProductsDAO.getAll();
+            products = await ProductDAO.getAll();
         }
         else {
-            products = await ProductsDAO.getAllWithStock();
+            products = await ProductDAO.getAllWithStock();
         }
 
-        res.render("products",{products});
-
-    }
-    catch (error) {
+        res.render("products",{
+            products,
+            style:"style.css",
+        });
+    } catch (error) {
         console.error("Error al obtener productos:", error);
         res.status(500).send("Error interno del servidor");
-    };
-
+    }
 });
-/* muestra los prod por id */
+
+
+// Ruta para mostrar el formulario de creación de productos
+products.get("/new", (req, res) => {
+    res.render("new-product",{
+        style:"new.css",
+    });
+});
+
+
 products.get("/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const product = await ProductsDAO.getById(id);
-        console.log("ID recibido:", id);
-
-        if (product) {
-            console.log("Producto encontrado:", product);
-            res.render("product",{
-                title:product.title,
-                description: product.description,
-                code: product.code,
-                price: product.price,
-                isStock: product.stock > 0,
-                category: product.category,
-                thumbnails:product.thumbnails
-            });
-        } else {
-            console.error("Producto no encontrado");
+        const product = await ProductDAO.getById(id);
+        console.log("id recibido:", id)
+        if (!product) {
             res.status(404).send("El producto no existe");
+            return;
+        }
+        res.render("product",{
+            title:product.title,
+            description: product.description,
+            code: product.code,
+            price: product.price,
+            isStock: product.stock > 0,
+            category: product.category,
+            thumbnails:`static/img/products/${product.image}`,
+            style:"style.css"
+        });
+    } catch (error) {
+        console.error("Error al obtener producto por ID:", error);
+        res.status(500).send({ error: "Error del servidor", details: error.stack });
+    }
+});
+
+// Ruta para procesar la creación de un nuevo producto
+products.post("/", upload.single('image'), async (req, res) => {
+    try {
+        const {
+            title,
+            description,
+            code,
+            price,
+            stock,
+            category
+        } = req.body;
+
+        // Verifica si todos los campos obligatorios están presentes
+        if (title && description && code && price && stock && category) {
+            const filename = req.file.filename; // Obtener el nombre del archivo subido
+            const newProduct = {
+                title,
+                description,
+                code,
+                price,
+                stock,
+                category,
+                image: filename // Agrega el nombre del archivo como parte del producto
+            };
+
+            // Agrega el nuevo producto a la base de datos
+            await ProductDAO.add(newProduct);
+
+            // Redirige al usuario al formulario de creación de productos
             res.redirect("/api/products/");
+        } else {
+            // Si falta algún campo obligatorio, devuelve un error 400
+            res.status(400).send("Falta completar campos obligatorios");
+            console.log(error, details)
         }
     } catch (error) {
-        console.error("Error al obtener productos:", error);
-        res.status(404).send({ error: "El producto no existe", details: "no se puede actualizar un producto que no existe" });
+        // Maneja cualquier error que ocurra durante el proceso de agregar el producto
+        console.error("Error al agregar producto:", error);
+        res.status(500).send("Error del servidor");
     }
 });
 
 /* ruta para actualizar prod */
-products.put("/:pid", async (req, res) => {
+products.put("/:_id", async (req, res) => {
     try {
-        const pid = req.params.pid;
+        const pid = req.params._id;
         const updatedFields = req.body;
 
         /* Validar que el producto exista antes de actualizar */
-        const product = await ProductsDAO.getById(pid);
+        const product = await ProductDAO.getById(pid);
         if (!product) {
             return res.status(404).send({ error: "El producto no existe" });
         }
 
-        const updatedProduct = await ProductsDAO.update(pid, updatedFields);
+        const updatedProduct = await ProductDAO.update(pid, updatedFields);
 
         console.log("Producto actualizado:", updatedProduct);
+        // Redirigir a la vista del producto actualizado
         if (updatedProduct) {
-            res.render(updatedProduct);
+            res.redirect(`/api/products/${pid}`);
         } else {
             console.error("El producto no existe");
             res.status(404).send({ error: "El producto no existe", details: "no se puede actualizar un producto que no existe" });
@@ -88,11 +135,11 @@ products.put("/:pid", async (req, res) => {
 });
 
 /* Ruta para eliminar un producto por ID */
-products.delete("/:pid", async (req, res) => {
+products.delete("/:_id", async (req, res) => {
     try {
-        const pid = req.params.pid;
+        const pid = req.params._id;
 
-        const deletedProduct = await ProductsDAO.remove(pid);
+        const deletedProduct = await ProductDAO.remove(pid);
 
         if (deletedProduct) {
             res.status(200).json({ message: "Producto eliminado correctamente", deletedProduct });
@@ -107,54 +154,4 @@ products.delete("/:pid", async (req, res) => {
 });
 
 
-/* ruta para agregar prod */
-products.post("/new", async (req, res) => {
-    res.render("new-product");
-}
-);
-
-products.post("/", upload.single('image'), async (req, res) => {
-    try {
-        const {
-            title,
-            description,
-            code,
-            price,
-            stock,
-            category,
-            thumbnails
-        } = req.body;
-
-        // Verifica si todos los campos obligatorios están presentes
-        if (title && description && code && price && stock && category) {
-            const filename = req.file.filename; // Obtener el nombre del archivo subido
-            const newProduct = {
-                title,
-                description,
-                code,
-                price,
-                stock,
-                category,
-                thumbnails: thumbnails || [], // Si thumbnails está indefinido, establece un array vacío
-                image: filename // Agrega el nombre del archivo como parte del producto
-            };
-
-            // Agrega el nuevo producto a la base de datos
-            await ProductsDAO.add(newProduct);
-
-            // Redirige al usuario a la página de productos
-            res.redirect("/api/products");
-        } else {
-            // Si falta algún campo obligatorio, devuelve un error 400
-            res.status(400).send("Falta completar campos obligatorios");
-        }
-    } catch (error) {
-        // Maneja cualquier error que ocurra durante el proceso de agregar el producto
-        console.error("Error al agregar producto:", error);
-        res.status(500).send("Error del servidor");
-    }
-});
-
-
-
-export default products
+export default products;

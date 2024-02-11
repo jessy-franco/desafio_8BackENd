@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2? family= Raleway:ital@1 & display=swap');
+
+html {
+    /* font-family: 'EB Garamond', serif; */
+    font-family: 'Raleway', sans-serif;
+    font-size: 62, 5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+/* inicia header */
+header {
+    font-family: 'EB Garamond', serif;
+}
+
+.encabezado .divColor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: green;
+}
+
+.talleLetra li a {
+    font-size: 1.2rem;
+}
+
+.logoNav {
+    visibility: hidden;
+}
+
+.flexCenter {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding-right: 23% !important
+}
+
+.encabezado .divColor h1 {
+    text-align: center;
+    font-size: 3rem;
+    font-style: italic;
+    color: #52734D;
+}
+
+.encabezado .divColor img {
+    padding: 5% 0% 5% 0%;
+}
+
+
+body .zona-1 {
+    width: 100%;
+    height: auto;
+}
+
+
+/* aplica a: .background-nav/ */
+.background-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+input[type="text"],
+textarea,
+input[type="file"],
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+    /* Altura ajustable */
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Estilos adicionales para el botón de archivo */
+input[type="file"] {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Estilos para el placeholder */
+::-webkit-input-placeholder {
+    color: #999;
+}
+
+:-moz-placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+::-moz-placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #999;
+}
+
+.fndoForm {
+    background-image: url(https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Frevistaindependientes.com%2Fwp-content%2Fuploads%2F2018%2F06%2Fplantas_medicinales-1024x683.jpg&f=1&nofb=1&ipt=0a7db7bceaee5164acf9ab307136264ff72d319f68aba4991b88013c9e935942&ipo=images);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

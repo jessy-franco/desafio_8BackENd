@@ -1,13 +1,14 @@
 import express from "express";
 import __dirname from "./utils/utils.js";
+import path from 'path';
 import products from "./routes/productsRouter.js"
-import carts from "./routes/cartsRouter.js" 
+import carts from "./routes/cartsRouter.js"
+import router from "./routes/views.router.js"
 import { engine } from 'express-handlebars';
 import mongoose from "mongoose";
+import { Server } from 'socket.io'
 
 const app = express();
-const routerproducts= products;
-const routercarts= carts 
 
 // View engine
 app.engine('handlebars', engine());
@@ -23,16 +24,22 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
     console.log("Connected to MongoDB Atlas");
-}); 
+});
 
 /* middlewares */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use("/static",express.static(__dirname + "/public"))
+app.use("/public", express.static(path.join(__dirname, "public")));
 
-/* routers */
-app.use("/api/products" ,routerproducts)
-app.use("/api/carts" ,routercarts)
+
+// Routers
+const routerproducts = products;
+const routercarts = carts;
+const routerChat= router
+
+app.use("/api/products", routerproducts)
+app.use("/api/carts", routercarts)
+app.use("/chat", routerChat)
 
 // Home del sitio
 app.get("/", (req, res) => {
@@ -41,6 +48,9 @@ app.get("/", (req, res) => {
 
 app.get("/home", (req, res) => {
     res.render("home");
+});
+app.get("/chat", (req, res) => {
+    res.render("chat");
 });
 
 app.get("/ping", (req, res) => {
@@ -54,6 +64,21 @@ app.use((req, res, next) => {
 
 
 
-app.listen(3000, () => {
-    console.log("servidor 8080!");
+const httpServer = app.listen(3000, () => {
+    console.log("servidor 3000!");
 });
+const io = new Server(httpServer);
+let messages = [];
+io.on('connection', socket => {
+    console.log('Nuevo cliente conectado')
+
+    socket.on('message', data => {
+        messages.push(data)
+        io.emit('messageLogs', messages)
+    })
+    socket.on("login", data => {
+        socket.emit('messageLogs', messages)
+        /* broadcast, todos los usuarios menos el que esta ahora */
+        socket.broadcast.emit("register", data)
+    })
+})

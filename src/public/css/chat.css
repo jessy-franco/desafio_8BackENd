@@ -22,7 +22,7 @@ header {
     align-items: center;
     width: 100%;
     height: auto;
-    background-color: green;
+    background-color: beige;
 }
 
 .talleLetra li a {
@@ -63,6 +63,75 @@ body .zona-1 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+h2{
+  text-align: center;
+    font-size: 2.8rem;
+    font-style: italic;
+    color: black;
+}
+.container{
+  background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.agrobeta.com%2Fagrobetablog%2Fwp-content%2Fuploads%2F2016%2F10%2FJardin.jpg&f=1&nofb=1&ipt=9414aa3a10bfcae821bc18054617bfcd4747c47be40c171a5f76bde669c3819e&ipo=images");
+  backgroun-size:cover;
+  background-repeat: no repeat;
+  background-position: center;
+}
+.chatContainer {
+    width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+h1 {
+    color: #2e8b57;
+    margin-bottom: 20px;
+}
+
+#chatBox {
+    width: calc(100% - 40px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#messageLogs {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.message .user {
+    font-weight: bold;
+    color: #2e8b57;
+}
+
+.message .content {
+    margin-left: 10px;
+}
+
+.image-container {
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 

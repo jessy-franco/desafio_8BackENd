@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { CartManager } from "../daos/cartManager.js";
+import { CartManager } from "../daos/cartDao.js";
 
 const carts = Router();
 const cartManager = new CartManager();
 
-/* creando carrito */
+/* Creación de un nuevo carrito */
 carts.post("/", async (req, res) => {
     try {
         const cart = await cartManager.createCart();
@@ -14,35 +14,54 @@ carts.post("/", async (req, res) => {
         res.status(500).send("Error del servidor");
     }
 });
-/* lectura de carrito segun id proporcionado */
+
+/* Lectura de un carrito según el ID proporcionado */
 carts.get("/:cid", async (req, res) => {
     try {
         const cid = req.params.cid;
         const cart = await cartManager.getCartById(cid);
         if (cart) {
-            res.status(200).send(cart);
+            res.render("cart",{
+                cart,
+                styles: cart.css,
+            })
         } else {
             console.error("Carrito no encontrado");
             res.status(404).send("Carrito no encontrado");
         }
     } catch (error) {
-        console.error("Error al obtener productos del carrito:", error);
+        console.error("Error al obtener carrito por ID:", error);
         res.status(500).send("Error del servidor");
     }
 });
-/* Post de un producto en el carrito seleccionado */
+
+/* Añadir un producto al carrito seleccionado */
 carts.post("/:cid/products/:pid", async (req, res) => {
     try {
         const cid = req.params.cid;
         const pid = req.params.pid;
         const quantity = req.body.quantity;
 
-        const cart = await cartManager.addProductToCart(cid, pid, quantity);
-        res.status(200).send(cart);
+        let cart = await cartManager.getCartById(cid);
+
+        if (!cart) {
+            // Si no hay un carrito existente, crear uno nuevo
+            cart = await cartManager.createCart();
+        }
+
+        // Agregar el producto al carrito
+        await cartManager.addProductToCart(cid, pid, quantity);
+
+        //Renderizar la página del carrito con los datos actualizados 
+        res.redirect("/api/cart/" + cid);
+        
+
     } catch (error) {
         console.error("Error al agregar producto al carrito:", error);
         res.status(500).send("Error del servidor");
     }
 });
 
+
 export default carts;
+
