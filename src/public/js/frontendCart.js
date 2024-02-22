@@ -21,6 +21,7 @@ document.getElementById("add-to-cart-btn").addEventListener("click", async () =>
         }
     } else {
         console.error("No se encontró el ID del producto.");
+        console.log(productId)
     }
 });
 

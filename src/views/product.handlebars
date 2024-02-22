@@ -1,17 +1,21 @@
-{{#if thumbnails}}
-<center><img src="/public/img/products/"/></center>
-{{/if}}
-<p>Nombre del producto:{{title}}</p>
-<p>Categoria:{{category}}</p>
-<p>Descripcion del producto:{{description}}</p>
-<p>Codigo del producto:{{code}}</p>
-{{#if isStock}}
-<p>Precio: {{price}}</p>
-<button id="add-to-cart-btn" data-product-id="{{this.productId}}">Agregar producto al carrito</button>
-{{else}}
-<p>No hay stock del producto</p>
-{{/if}}
 
+<main class="gridContainer">
+    {{#if thumbnails}}
+    <center><img src="{{thumbnails}}" /></center>
+    {{/if}}
+
+    <p>Nombre del producto:{{title}}</p>
+    <p>Categoria:{{category}}</p>
+    <p>Descripcion del producto:{{description}}</p>
+    <p>Codigo del producto:{{code}}</p>
+    {{#if isStock}}
+    <p>Precio: {{price}}</p>
+    <button id="add-to-cart-btn" data-product-id="{{this.code}}">Agregar producto al carrito</button>
+    {{else}}
+    <p>No hay stock del producto</p>
+    {{/if}}
+</main>
+ 
+
+<script src="/js/frontendCart.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-<script src="/src/public/js/frontendCart.js"></script>

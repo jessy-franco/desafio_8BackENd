@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import CartModel from "./models/cartSchema.js";
-
+/* import Product from "./models/productSchema.js"; */
 
 class Cart {
     constructor() {
@@ -63,6 +63,33 @@ class CartManager {
     
         return cart;
     }
+    
+
+    async removeProductFromCart(cid, pid) {
+        // Eliminar un producto del carrito por su ID
+        await CartModel.findByIdAndUpdate(cid, {
+            $pull: { products: { productId: pid } }
+        });
+    }
+
+    async updateCartProducts(cid, products) {
+        // Actualizar el arreglo de productos del carrito
+        await CartModel.findByIdAndUpdate(cid, { products });
+    }
+    
+    async updateProductQuantity(cid, pid, quantity) {
+        // Actualizar la cantidad de ejemplares de un producto en el carrito
+        await CartModel.findOneAndUpdate(
+            { _id: cid, "products.productId": pid },
+            { $set: { "products.$.quantity": quantity } }
+        );
+    }
+
+    async clearCart(cid) {
+        // Eliminar todos los productos del carrito
+        await CartModel.findByIdAndUpdate(cid, { products: [] });
+    }
+
     
 
 }

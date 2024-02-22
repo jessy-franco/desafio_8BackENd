@@ -14,7 +14,7 @@ class ProductDAO {
             const newProduct = await Product.create(productData);
             return newProduct.toObject();
         } catch (error) {
-            console.error("Error al agregar producto:", error);
+            console.error("Error al agregar producto en ProductDAO.add:", error);
             throw error;
         }
     }

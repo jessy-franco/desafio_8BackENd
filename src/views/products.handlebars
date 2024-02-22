@@ -1,6 +1,29 @@
-
-<ul>
-    {{#each products}}
-        <li><a href="/api/products/{{this._id}}">{{this.title}}</a></li>
-    {{/each}}
-</ul>
+{{#if pagination.isValid}}
+{{#each products}}
+    <div class="newCard">
+        <div class="card-img">
+            <img src="{{this.thumbnails}}" alt="Product img" width="120px" height="150px">
+        </div>
+        <div class="detailContainer">
+            <h2>{{this.title}}</h2>
+            <p>{{this.description}}</p>
+            <p class="priceTag">Precio: {{this.price}}</p>
+            <a href="/api/products/{{this._id}}"><button class="custom-button">Ver mas</button></a>
+        </div>
+    </div>
+{{/each}}
+<div class="display">
+    {{#if pagination.prevLink}}
+    <a href="{{pagination.prevLink}}">
+        << Anterior</a>
+            {{/if}}
+            &nbsp;
+            {{pagination.currentPage}}
+            &nbsp;
+            {{#if pagination.nextLink}}
+            <a href="{{pagination.nextLink}}">Siguiente >></a>
+            {{/if}}
+</div>
+{{else}}
+<h1>No hay productos para mostrar</h1>
+{{/if}}
