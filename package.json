@@ -1,8 +1,8 @@
 {
   "type": "module",
-  "name": "preentrega2",
+  "name": "cls20-cookies",
   "version": "1.0.0",
-  "description": "preentrega2",
+  "description": "cls20-cookies",
   "main": "app.js",
   "scripts": {
     "start": "nodemon src/app.js",
@@ -12,8 +12,10 @@
   "license": "ISC",
   "keywords": [],
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.3",
     "mongoose-paginate-v2": "^1.8.0",
