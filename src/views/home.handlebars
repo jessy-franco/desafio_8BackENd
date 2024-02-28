@@ -6,10 +6,11 @@
 </ul>
 <section>
     <h2>Ingresa</h2>
-    <div>
+    {{!-- <div>
         <form method="POST" action="/setCookie">
             <input type="text" name="username" placeholder="Username">
             <input type="text" name="email" placeholder="Email">
+            <input type="checkbox" name="signed"><label for="signedForm">Signed?</label>
             <input type="submit" value="setear cookie">
         </form>
         
@@ -19,5 +20,14 @@
         <form method="GET" action="/deleteCookie">
             <input type="submit" value="Borrar cookie">
         </form>
+    </div> --}}
+    <div>
+        <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="Usuario">
+            <input type="password" name="password" placeholder="Contraseña">
+            <input type="submit" value="Iniciar sesión">
+        </form>
+        
+        
     </div>
 </section>

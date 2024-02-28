@@ -1,0 +1,7 @@
+<h1>¡¡¡Bienvenidx ${{username}}</h1>
+<form method="GET" action="/logout">
+<input type="submit" value="Cerrar sesión"></form>
+{{#if cierreSession}}
+        <h2>Sesión cerrada</h2>
+        <button><a href="/home">Volver al inicio</a></button>
+        {{/if}}
