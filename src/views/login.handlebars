@@ -1,0 +1,24 @@
+<section>
+    <h1>Inicia sesión</h1>
+    <div>
+        <form method="POST" action="/api/sessions/login">
+            <input type="text" name="email" placeholder="email" />
+            <input type="password" name="password" placeholder="password" />
+            <input type="submit" value="Iniciar sesión" class="custom-button">
+        </form>
+    </div>
+    <div>
+        <h2><a href="/register">¿No estas registrado? Registrate por unica vez</a></h2>
+    </div>
+</section>
+{{#if error}}
+{{#if (eq error "Ingrese_todos_los_campos")}}
+<h2>Error: Por favor, complete todos los campos</h2>
+{{/if}}
+{{#if (eq error "Usuario_y/o_contraseña_incorrectas")}}
+<h2>Error: Usuario y/o contraseña incorrectos</h2>
+{{/if}}
+{{#if (eq error "usuario_no_existe")}}
+<h2>Error: El usuario no existe</h2>
+{{/if}}
+{{/if}}
