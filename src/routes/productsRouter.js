@@ -2,6 +2,8 @@ import express from "express";
 import ProductDAO from "../daos/productsDao.js";
 import Product from "../daos/models/products.schema.js";
 import mongoose from "mongoose";
+import UsersDao from "../daos/userDao.js";
+import { isAdmin } from "./sessionRouter.js"
 
 const products = express.Router();
 
@@ -43,13 +45,17 @@ products.get("/", async (req, res) => {
             nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}` : '',
             isValid: !(page <= 0 || page > result.totalPages)
         };
-
+        // Asignar req.query.inicioSesion a inicioSesion
+        let inicioSesion = req.query.inicioSesion === "true";
+        let user = await UsersDao.getUserByID(req.session.user);
         res.render("products", {
             products: result.docs,
             pagination,
+            inicioSesion,
+            user:user,
             style: "products.css"
         });
-        
+
         // Llamar a la función environment para establecer la conexión y obtener los resultados paginados
         const environment = async () => {
             await mongoose.connect("mongodb+srv://jesicafranco1518:Seifer1979@cluster0.4oanjkk.mongodb.net/eccomerce?retryWrites=true&w=majority");
@@ -100,12 +106,12 @@ products.get("/", async (req, res) => {
         console.error("Error al obtener productos:", error);
         res.status(500).send("Error interno del servidor");
     }
-    
+
 });
 
 
 // Ruta para mostrar el formulario de creación de productos (Funcional)
-products.get("/new", (req, res) => {
+products.get("/new", isAdmin, (req, res) => {
     res.render("new-product", {
         style: "new.css",
     });

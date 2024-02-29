@@ -139,3 +139,79 @@ input[type="file"] {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.zona-6 .mini-grid {
+    display: grid;
+    grid-template-columns: 650px 1fr;
+    grid-auto-rows: auto;
+    grid-template-areas: "redes mapa";
+    overflow-x: hidden;
+}
+
+.zona-6 .mini-grid .redes div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zona-6 .mini-grid .redes {
+    grid-area: redes;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 100%;
+    height: auto;
+    background-color: #FEFFDE;
+}
+
+.zona-6 .mini-grid .redes h3 {
+    color: #52734D;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.6rem;
+    font-size: 2rem;
+    padding: 8% 5%;
+}
+
+.zona-6 .mini-grid .redes div a {
+    padding: 10%;
+    align-items: center;
+}
+
+.zona-6 .mini-grid .mapa {
+    grid-area: mapa;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    padding: 5% 10%;
+    background-color: rgba(173, 194, 169, 0.7568627451);
+    width: 100%;
+    height: auto;
+}
+
+.zona-6 .mini-grid .mapa div {
+    width: 100%;
+    height: auto;
+}
+
+.zona-6 .mini-grid .mapa div h3 {
+    text-align: center;
+    color: green;
+    font-style: italic;
+    margin-right: 15%;
+    padding-bottom: 6%;
+    line-height: 2.5rem;
+}
+
+.zona-6 .mini-grid .mapa div iframe {
+    width: 80%;
+    height: 60%;
+    margin-right: 15%;
+}
+
+.zona-6 .pie {
+    background-color: #99A799;
+    line-height: 1.6rem;
+}

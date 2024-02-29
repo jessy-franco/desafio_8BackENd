@@ -40,7 +40,7 @@ header {
     padding-right: 23% !important
 }
 
-.encabezado .divColor h1 {
+h1 {
     text-align: center;
     font-size: 3rem;
     font-style: italic;
@@ -68,6 +68,10 @@ body .zona-1 {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+.navbar-nav{
+    margin-left: 20%;
 }
 /* Estilos para el botón */
 .custom-button {
@@ -85,14 +89,119 @@ body .zona-1 {
     transition: background-color 0.3s ease;
     /* Transición suave del color de fondo */
 }
-
+.imgEncabezado{
+    width: 90%;
+    height: 30%;
+    margin-left: 4%;
+}
+.containerImage{
+    background-image: url(https://images.pexels.com/photos/17578628/pexels-photo-17578628/free-photo-of-jardin-hojas-plantas-parterre-de-flores.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    
+}
+.containerLinks{
+    text-align: center;
+    padding: 4%;
+    background: #045e5e9b;
+    width: 30%;
+    height: auto;
+    margin: 3% 33%;
+}
+.containerLinks h2{
+    text-decoration: overline;
+    font-size: 2rem;
+    padding-bottom: 3%;
+    color: #FEFFDE;
+}
+.containerLinks a{
+    text-decoration: none;
+    color: rgb(236, 249, 249);
+}
 /* Estilos para cuando el cursor está sobre el botón */
 .custom-button:hover {
     background-color: #5cb8b2;
     /* Color verde agua un poco más oscuro al pasar el cursor */
 }
+/* estilos del producto individual  */
+.gridContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.gridCard {
+    background-color: #f0f7ee;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin:  8% 0;
+}
 
+.gridCard img {
+    width: 60%;
+    height: 80%;
+    height: auto;
+    border-radius: 10px;
+    margin: 8%;
+}
+
+.gridCard p {
+    margin: 10px 0;
+    font-size: 1.2 rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.gridCard button {
+    margin: 5% 0 8% 30%;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gridCard button:hover {
+    background-color: #45a049;
+}
+/* logout */
+.sessionOut{
+    text-align: center;
+}
+.sessionInit form{
+    margin-left: 34%;
+}
+.sessionInit div img{
+    margin-left: 34%;
+}
+.sessionInit div h2{
+    margin-left: 24%;
+    padding-bottom: 3%;
+}
+/* vista register */
+.register{
+    text-align: center;
+    padding: 1%;
+    background-image: url(https://images.pexels.com/photos/4622252/pexels-photo-4622252.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.register h1{
+    color: #fdffb5;
+}
+.register form{
+    background-color: #FEFFDE;
+    margin: 0 35%;
+    padding: 2%;
+}
+.register .button{
+    margin: 2%;
+}
 .zona-6 .mini-grid {
     display: grid;
     grid-template-columns: 650px 1fr;

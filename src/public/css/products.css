@@ -16,7 +16,24 @@ html {
 header {
     font-family: 'EB Garamond', serif;
 }
-
+.navbar-nav{
+    margin-left: 25%;
+}
+.coso{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.coso div p, h1{
+    text-align: center;
+}
+.coso div img{
+    margin-left: 24%;
+}
+.coso div div{
+    margin-left: 35%;
+    padding: 2%;
+}
 .encabezado .divColor {
     display: flex;
     justify-content: space-around;
@@ -41,13 +58,16 @@ header {
     padding-right: 23% !important
 }
 
-.encabezado .divColor h1 {
+h2{
     text-align: center;
     font-size: 3rem;
     font-style: italic;
     color: #405a3c90;
 }
 
+p a{
+    margin-left: 40%;
+}
 .encabezado .divColor img {
     padding: 5% 0% 5% 0%;
 }
@@ -62,7 +82,7 @@ body .zona-1 {
     width: 100%;
     height: auto;
 }
-
+/* 
 .zona-2 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -74,7 +94,18 @@ body .zona-1 {
     margin-bottom: 10%;
     background-color: #8ad2bab8;
 }
-
+ */
+ .productsCards{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: auto;
+    gap: 0.5%;
+    width: 100%;
+    height: 80%;
+    padding: 0 5px;
+    margin-bottom: 10%;
+    background-color: #8ad2bab8;
+ }
 .card-img {
     width: 280px;
     height: 260px;

@@ -1,4 +1,14 @@
-<section>
+{{#if cierreSession}}
+<section class="sessionOut">
+    <div>
+        <h2>Sesión cerrada</h2>
+        <h3>¡¡¡Esperamos verte nuevamente por nuestro sitio!!! </h3>
+        <h4>No te pierdas nuestras increíbles ofertas semanales...</h4>
+        
+    </div>
+</section>
+{{/if}}
+<section class="sessionInit">
     <h1>Inicia sesión</h1>
     <div>
         <form method="POST" action="/api/sessions/login">
@@ -8,6 +18,7 @@
         </form>
     </div>
     <div>
+        <img src="/img/imgPages/dinoLogin.jpg" alt="dinoAdios" width="30%" height="45%">
         <h2><a href="/register">¿No estas registrado? Registrate por unica vez</a></h2>
     </div>
 </section>

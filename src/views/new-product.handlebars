@@ -1,12 +1,12 @@
 <section class="fndoForm">
     <form action="/api/products" method="post">
-        <input type="text" name="title" placeholder="Titulo del producto">
-        <textarea name="description" placeholder="Descripción del producto"></textarea>
-        <input type="text" name="code" placeholder="Codigo del producto">
-        <input type="text" name="price" placeholder="Precio del producto">
-        <input type="text" name="stock" placeholder="Stock del producto">
-        <input type="text" name="category" placeholder="Categoria del producto">
-        <input type="text" name="thumbnails" placeholder="url imagen del producto" />
+        <input type="text" name="title" placeholder="Titulo del producto" required>
+        <textarea name="description" placeholder="Descripción del producto" required></textarea>
+        <input type="text" name="code" placeholder="Codigo del producto" required>
+        <input type="text" name="price" placeholder="Precio del producto" required>
+        <input type="text" name="stock" placeholder="Stock del producto" required>
+        <input type="text" name="category" placeholder="Categoria del producto" required>
+        <input type="text" name="thumbnails" placeholder="url imagen del producto" required/>
         <input type="submit" value="Crear producto" />
     </form>
 </section>

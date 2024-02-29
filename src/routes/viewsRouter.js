@@ -1,20 +1,20 @@
 import Router from "express";
 import express from "express";
-import UsersDao from "../daos/userDao.js";
+/* import UsersDao from "../daos/userDao.js"; */
 
 const viewsRouter = express.Router();
 /* registrarse */
 viewsRouter .get("/register", (req,res)=>{
-    res.render("register")
+    res.render("register",{
+        style: "style.css"
+    })
 })
 
 
 /* login con session */
 viewsRouter.get("/login", (req,res)=>{
     if(req.session.user){
-        res.redirect("/panel", { 
-            style:"style.css",
-        })
+        res.redirect("/api/products?inicioSesion=true")
 
     }
     else{
@@ -24,19 +24,6 @@ viewsRouter.get("/login", (req,res)=>{
     }
     
 });
-viewsRouter .get("/panel", async (req, res)=>{
-    if(req.session.user){
-        let user = await UsersDao.getUserByID(req.session.user);
-        res.render("panel", { 
-            user,
-            style:"style.css",
-        })
-    }
-    else{
-        res.redirect("/login")
-    }
 
-    
-})
 
 export default viewsRouter ;

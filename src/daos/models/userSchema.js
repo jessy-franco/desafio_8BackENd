@@ -20,6 +20,10 @@ const UsersSchema = new mongoose.Schema({
     password:{
         type:String,
         require: true
+    },
+    admin: {
+        type: Boolean,
+        default: false // Por defecto, los usuarios no son administradores
     }
     /* md5, funciones criptograficas para password, hashearla (A56) */
 });

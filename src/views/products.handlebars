@@ -1,5 +1,23 @@
-{{#if pagination.isValid}}
-{{#each products}}
+{{#if inicioSesion}}
+<section class="coso">
+    <div>
+        <h1>¡¡¡Bienvenidx {{user.first_name}} {{user.last_name}}!!!</h1>
+        <p>Edad: {{user.age}}</p>
+        <p>Email: {{user.email}}</p>
+        <img src="/img/imgPages/dinoJardinero.jpg" alt="imagen de bienvenida" width="50%" height="55%">
+        <div><a href="/api/sessions/logout"><button class="custom-button">Cerrar Sesión</button></a></div>
+
+    </div>
+</section>
+{{!-- {{#if user.admin}} Por alguna razon no funciona. Pendiente de revisar --}}
+<p><a href="/api/products/new"><button class="custom-button">Agregar producto (admin)</button></a></p>
+{{!-- {{/if}} --}}
+<h2>Nuestros productos</h2>
+{{/if}}
+
+<section class="productsCards">
+    {{#if pagination.isValid}}
+    {{#each products}}
     <div class="newCard">
         <div class="card-img">
             <img src="{{this.thumbnails}}" alt="Product img" width="120px" height="150px">
@@ -11,19 +29,20 @@
             <a href="/api/products/{{this._id}}"><button class="custom-button">Ver mas</button></a>
         </div>
     </div>
-{{/each}}
-<div class="display">
-    {{#if pagination.prevLink}}
-    <a href="{{pagination.prevLink}}">
-        << Anterior</a>
-            {{/if}}
-            &nbsp;
-            {{pagination.currentPage}}
-            &nbsp;
-            {{#if pagination.nextLink}}
-            <a href="{{pagination.nextLink}}">Siguiente >></a>
-            {{/if}}
-</div>
-{{else}}
-<h1>No hay productos para mostrar</h1>
-{{/if}}
+    {{/each}}
+    <div class="display">
+        {{#if pagination.prevLink}}
+        <a href="{{pagination.prevLink}}">
+            << Anterior</a>
+                {{/if}}
+                &nbsp;
+                {{pagination.currentPage}}
+                &nbsp;
+                {{#if pagination.nextLink}}
+                <a href="{{pagination.nextLink}}">Siguiente >></a>
+                {{/if}}
+    </div>
+    {{else}}
+    <h1>No hay productos para mostrar</h1>
+    {{/if}}
+</section>
