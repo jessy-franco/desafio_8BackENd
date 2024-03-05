@@ -3,7 +3,7 @@ import ProductDAO from "../daos/productsDao.js";
 import Product from "../daos/models/products.schema.js";
 import mongoose from "mongoose";
 import UsersDao from "../daos/userDao.js";
-import { isAdmin } from "./sessionRouter.js"
+import { isAdmin } from "../middlewares/auth.middleware.js"
 
 const products = express.Router();
 

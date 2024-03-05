@@ -1,8 +1,8 @@
 {
   "type": "module",
-  "name": "cls20.2-cookies2",
+  "name": "desafio6-backend",
   "version": "1.0.0",
-  "description": "cls20.2-cookies2",
+  "description": "desafio6-backend",
   "main": "app.js",
   "scripts": {
     "start": "nodemon src/app.js",

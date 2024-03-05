@@ -5,20 +5,17 @@ const router = express.Router();
 
 /* registrarse */
 router.post("/register", async (req, res) => {
-
-    let first_name = req.body.first_name;
-    let last_name = req.body.last_name;
-    let email = req.body.email;
-    let age = parseInt(req.body.age);
-    let password = req.body.password;
+/* corrección 1 */
+    const {first_name, last_name, email, age, password } = req.body
+    
 
     if (!first_name || !last_name || !email || !age || !password) {
         res.redirect("/register", {
             style: "style.css",
         });
     }
-
-    let emailUsed = await UsersDao.getUserByEmail(email);
+/* corrección 2 */
+    const emailUsed = await UsersDao.getUserByEmail(email);
 
     if (emailUsed) {
         res.redirect("/register");
@@ -77,15 +74,13 @@ router.post("/login", async (req, res) => {
 });
 
 // Middleware de autorización para verificar si el usuario es administrador
-export function isAdmin(req, res, next) {
+/* export function isAdmin(req, res, next) {
     if (req.session.admin) {
-        // Si el usuario es administrador, pasa al siguiente middleware o ruta
         next();
     } else {
-        // Si el usuario no es administrador, redirige a una página de acceso no autorizado
         res.redirect("/login")
     }
-}
+} */
 
 
 export default router;
