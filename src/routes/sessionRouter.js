@@ -1,26 +1,26 @@
 import express from "express";
 import UsersDao from "../daos/userDao.js";
+import { createHash, isValidPassword } from '../utils/utils.js'
 
 const router = express.Router();
 
 /* registrarse */
 router.post("/register", async (req, res) => {
-/* corrección 1 */
-    const {first_name, last_name, email, age, password } = req.body
-    
+    /* corrección 1 */
+    const { first_name, last_name, email, age, password } = req.body
+
 
     if (!first_name || !last_name || !email || !age || !password) {
-        res.redirect("/register", {
-            style: "style.css",
-        });
+        res.redirect("/register");
     }
-/* corrección 2 */
+    /* corrección 2 */
     const emailUsed = await UsersDao.getUserByEmail(email);
 
     if (emailUsed) {
-        res.redirect("/register");
-    } else {
-        await UsersDao.insert(first_name, last_name, age, email, password);
+        res.redirect("/register?error= El_email_ya_esta_registrado");
+    }else{
+        const hashedPassword = createHash(password);
+        await UsersDao.insert(first_name, last_name, age, email, hashedPassword);
         res.redirect("/login");
     }
 
@@ -48,39 +48,40 @@ router.post("/login", async (req, res) => {
     }
 
     try {
-        // Buscar al usuario en la base de datos
-        let user = await UsersDao.getUserByCreds(email, password);
+        // Obtener el usuario de la base de datos
+        let user = await UsersDao.getUserByEmail(email);
 
         // Verificar si el usuario existe
         if (!user) {
             return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
         } else {
+            // Verificar si la contraseña es válida
+            if (!isValidPassword(user, password)) {
+                return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
+            }
             // Verificar si el usuario es administrador
             if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') {
                 req.session.admin = true;
             } else {
                 req.session.admin = false;
             }
-            // Establecer el rol del usuario
-            req.session.rol = req.session.admin ? 'admin' : 'usuario';
-            // Establecer la sesión de usuario
-            req.session.user = user._id;
-            return res.redirect("/api/products?inicioSesion=true");
+
         }
-    } catch (error) {
-        console.error("Error al autenticar usuario:", error);
-        return res.status(500).send("Error al autenticar usuario");
+
+        // Establecer el rol del usuario
+        req.session.rol = req.session.admin ? 'admin' : 'usuario';
+        // Eliminar la contraseña del usuario de la sesión
+        delete user.password;
+        // Establecer la sesión de usuario
+        req.session.user = user;
+        return res.redirect("/api/products?inicioSesion=true");
     }
+    catch (error) {
+    console.error("Error al autenticar usuario:", error);
+    return res.status(500).send("Error al autenticar usuario");
+}
 });
 
-// Middleware de autorización para verificar si el usuario es administrador
-/* export function isAdmin(req, res, next) {
-    if (req.session.admin) {
-        next();
-    } else {
-        res.redirect("/login")
-    }
-} */
 
 
 export default router;
