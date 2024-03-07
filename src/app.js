@@ -8,6 +8,9 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import router from "./routes/sessionRouter.js"
 import viewsRouter from "./routes/viewsRouter.js"
+import passport from "passport";
+import initializePassport from "./config/passport.config.js"
+
 
 const app = express();
 
@@ -33,16 +36,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("./src/public"));
 app.use(cookieParser("cookieS3cR3tC0D3"));
+initializePassport();
 app.use(session({
     store:MongoStore.create({
         mongoUrl:"mongodb+srv://jesicafranco1518:Seifer1979@cluster0.4oanjkk.mongodb.net/eccomerce?retryWrites=true&w=majority",
-        ttl:900,
+        ttl:30/* 900 */,
     }),
     secret: "secretCoder",
     resave: false,
     saveUninitialized: false 
 }))
-
+app.use(passport.initialize());
+app.use(passport.session())
 // Routers
 const routerproducts = products;
 const routercarts = carts;
