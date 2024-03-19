@@ -25,6 +25,10 @@ const UsersSchema = new mongoose.Schema({
         type:String,
         required:true,
         default: "user"
+    },
+    cart: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Cart" // Referencia al modelo de carrito
     }
 
 });
