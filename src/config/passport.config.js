@@ -1,71 +1,29 @@
-import GitHubStrategy from "passport-github2"
+import GitHubStrategy from "passport-github2" 
 import UsersDao from "../daos/userDao.js"
 import passport from "passport"
-import { createHash, isValidPassword } from "../utils/utils.js"
-import local from "passport-local"
+import jwt from "passport-jwt"
 
-
-const LocalStrategy = local.Strategy;
-
-
+const JwtStrategy = jwt.Strategy
 const initializePassport = () => {
-    /* sesion con passport-Local */
-
-    passport.use("register", new LocalStrategy(
-        { passReqToCallback: true, usernameField: "email" }, async (req, username, password, done) => {
-            const { first_name, last_name, email, age } = req.body;
-            try {
-                let user = await UsersDao.getUserByEmail(username);
-                if (user) {
-                    console.log("El usuario ya existe");
-                    return done(null, false);
-                }
-                const newUser = {
-                    first_name,
-                    last_name,
-                    email,
-                    age,
-                    password: createHash(password)
-                };
-                let result = await UsersDao.insert(newUser);
-                return done(null, result);
-            } catch (error) {
-                return done("Error al obtener usuario: " + error);
+    passport.use("jwt", new JwtStrategy({
+        jwtFromRequest: (req) => {
+            var token = null;
+            if (req && req.signedCookies) {
+                token = req.signedCookies['jwt'];
             }
-        }
-    ));
-    
-
-    /* funciones de serializacion y deserializacion */
-    passport.serializeUser((user, done) => {
-        done(null, user._id);
-    })
-    
-    passport.deserializeUser(async function(id, done) {
-        try {
-            const user = await UsersDao.getUserByID(id);
-            done(null, user);
-        } catch (error) {
-            done(error);
-        }
-    });
-    
-    
-
-    passport.use("login", new LocalStrategy({usernameField:"email"},async(username, password, done)=>{
-        try{
-            const user = await UsersDao.getUserByEmail(username)
-            if(!user){
-                console.log ("el usuario no existe")
-                return done (null, false)
-            }
-            if(!isValidPassword(user, password)) return done (null, false);
-            return done (null, user)
-        }
-        catch(error){
-            return done(error)
+            return token;
+        },
+        secretOrKey: "secret_jwt"
+    }, async function (jwt_payload, done) {
+        let userId = jwt_payload.id;
+        let user = await UsersDao.getUserByID(userId);
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
         }
     }))
+
 
     /* sesion con github */
     passport.use("github", new GitHubStrategy({
@@ -77,11 +35,11 @@ const initializePassport = () => {
             console.log(profile)
             let email = profile._json.email;
             if (!email) {
-                // Si el email es null, no se puede realizar una búsqueda por email
+
                 return done(null, false);
             }
 
-            let user = await UsersDao.getUserByEmail(profile._json.email);/* no registra newUser...porque? */
+            let user = await UsersDao.getUserByEmail(profile._json.email);
             if (!user) {
                 let newUser = {
                     first_name: profile._json.name,
@@ -94,7 +52,7 @@ const initializePassport = () => {
                 done(null, result);
             }
             else {
-                /* si el usuario ya existe */
+
                 done(null, user);
             }
         } catch (error) {

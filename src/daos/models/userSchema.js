@@ -3,29 +3,30 @@ import mongoose from "mongoose";
 const UsersSchema = new mongoose.Schema({
     first_name:{
         type:String,
-        require: true
+        required: true
     },
     last_name:{
         type:String,
-        require: true
+        required: true
     },
     age:{
         type:Number,
-        require: true
+        required: true
     },
     email:{
         type:String,
-        require: true
+        required: true
     },
     password:{
         type:String,
-        require: true
+        required: true
     },
-    admin: {
-        type: Boolean,
-        default: false // Por defecto, los usuarios no son administradores
+    role: {
+        type:String,
+        required:true,
+        default: "user"
     }
-    /* md5, funciones criptograficas para password, hashearla (A56) */
+
 });
 
 export default mongoose.model("Users", UsersSchema)

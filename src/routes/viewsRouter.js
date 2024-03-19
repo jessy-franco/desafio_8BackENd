@@ -10,20 +10,19 @@ viewsRouter .get("/register", (req,res)=>{
     })
 })
 
-
-/* login con session */
-viewsRouter.get("/login", (req,res)=>{
-    if(req.session.user){
-        res.redirect("/api/products?inicioSesion=true")
-
+viewsRouter.get("/login", (req, res) => {
+    // Verificar si hay un token JWT en las cookies
+    if (req.signedCookies.jwt) {
+        // Redirigir al usuario si está autenticado
+        return res.redirect("/api/products?inicioSesion=true");
     }
-    else{
-        res.render("login", {
-            style: "style.css"
-        });
-    }
-    
+
+    // Si no hay un token JWT presente, renderizar la página de inicio de sesión
+    res.render("login", {
+        style: "style.css"
+    });
 });
+
 
 
 export default viewsRouter ;

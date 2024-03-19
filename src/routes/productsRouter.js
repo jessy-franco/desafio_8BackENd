@@ -3,6 +3,7 @@ import ProductDAO from "../daos/productsDao.js";
 import Product from "../daos/models/products.schema.js";
 import mongoose from "mongoose";
 import UsersDao from "../daos/userDao.js";
+import jwt from "jsonwebtoken";
 import { isAdmin } from "../middlewares/auth.middleware.js"
 
 const products = express.Router();
@@ -46,16 +47,29 @@ products.get("/", async (req, res) => {
             isValid: !(page <= 0 || page > result.totalPages)
         };
         // Asignar req.query.inicioSesion a inicioSesion
-        let inicioSesion = req.query.inicioSesion === "true";
-        let user = await UsersDao.getUserByID(req.session.user);
+        /* let inicioSesion = req.query.inicioSesion === "true";
+        let user = await UsersDao.getUserByID(req.session.user); */
+        try {
+            const token = req.signedCookies.jwt;
+            if (!token) {
+                res.redirect("/login");
+                return;
+            }
+    
+            const decodedToken = jwt.verify(token, "secret_jwt");
+            const userId = decodedToken.id;
+            const user = await UsersDao.getUserByID(userId);
         res.render("products", {
             products: result.docs,
             pagination,
-            inicioSesion,
             user:user,
             style: "products.css"
         });
-
+    } catch (error) {
+        console.error("Error al obtener productos:", error);
+        res.status(500).json({ status: 500, error: "Internal Server Error" });
+    }
+        
         // Llamar a la función environment para establecer la conexión y obtener los resultados paginados
         const environment = async () => {
             await mongoose.connect("mongodb+srv://jesicafranco1518:Seifer1979@cluster0.4oanjkk.mongodb.net/eccomerce?retryWrites=true&w=majority");

@@ -1,112 +1,73 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 import passport from "passport";
-/* import { createHash, isValidPassword } from '../utils/utils.js' */
+import UsersDao from "../daos/userDao.js";
 
 const router = express.Router();
 
-/* SESSION en plataforma formulario y bcrypt */
 
+/* jwt */
+router.post("/register", async (req, res) => {
 
-/* router.post("/register", async (req, res) => {
-    
-    const { first_name, last_name, email, age, password } = req.body
-
+    let first_name = req.body.first_name;
+    let last_name = req.body.last_name;
+    let email = req.body.email;
+    let age = parseInt(req.body.age);
+    let password = req.body.password;
 
     if (!first_name || !last_name || !email || !age || !password) {
-        res.redirect("/register");
+        res.status(400).json({ status: 400, error: "Missing data" });
     }
-    
-    const emailUsed = await UsersDao.getUserByEmail(email);
+
+    let emailUsed = await UsersDao.getUserByEmail(email);
 
     if (emailUsed) {
-        res.redirect("/register?error= El_email_ya_esta_registrado");
-    }else{
-        const hashedPassword = createHash(password);
-        await UsersDao.insert(first_name, last_name, age, email, hashedPassword);
-        res.redirect("/login");
+        res.status(400).json({ status: 400, error: "Email already used" });
+    } else {
+        await UsersDao.insert(first_name, last_name, age, email, password);
+        res.status(200).json({ status: 200, error: "User created" });
     }
 
 })
 
-
-router.get("/logout", (req, res) => {
-    req.session.destroy(err => {
-        if (!err) res.render("login", {
-            cierreSession: true,
-            style: "style.css",
-        })
-        else res.send({ status: "Error al cerrar sesión", body: err })
-    })
-})
-
-
 router.post("/login", async (req, res) => {
+
     let email = req.body.email;
     let password = req.body.password;
-    
+
     if (!email || !password) {
+        /* res.status(400).json({status:400, error:"Missing credentials"}) */
         return res.redirect("/login?error=Ingrese_todos_los_campos");
     }
 
-    try {
-        
-        let user = await UsersDao.getUserByEmail(email);
-        
-        if (!user) {
-            return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
-        } else {
-            
-            if (!isValidPassword(user, password)) {
-                return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
-            }
-            
-            if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') {
-                req.session.admin = true;
-            } else {
-                req.session.admin = false;
-            }
+    let user = await UsersDao.getUserByCreds(email, password);
 
-        }
-        req.session.rol = req.session.admin ? 'admin' : 'usuario';
-        
-        delete user.password;
-        
-        req.session.user = user;
-        return res.redirect("/api/products?inicioSesion=true");
+    if (!user) {
+        /* res.status(404).json({status:404, error:"User not found"}) */
+        return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
+    } else {
+
+        let token = jwt.sign({ id: user._id }, 'secret_jwt', { expiresIn: '1h' });
+
+        res.cookie("jwt", token, {
+            signed: true,
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60
+        })
     }
-    catch (error) {
-    console.error("Error al autenticar usuario:", error);
-    return res.status(500).send("Error al autenticar usuario");
-}
-}); */
-
-
-/* SESION EN PLATAFORMA con passport-local */
-
-router.post("/register",passport.authenticate("register",{failureRedirect:"/register?error= El_email_ya_esta_registrado"}), async (req, res) => {
-    res.redirect("/login");
-    console.log("User registrado con exito")
-    
-})
-
-
-
-
-router.post("/login",passport.authenticate("login",{failureRedirect:"/login?error=Usuario_y/o_contraseña_incorrectas"}), async (req, res) => {
-
-        // Verificar si el usuario existe
-        if (!req.user) {
-            return res.redirect("/login?error=El_usuario_no_existe");
-        } else {
-            req.session.user ={
-                first_name : req.user.first_name,
-                last_name : req.user.last_name,
-                age: req.user.age,
-                email: req.user.email
-            }
-            return res.redirect("/api/products?inicioSesion=true");
-        }
+    return res.redirect("/api/products?inicioSesion=true");
 });
+
+router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
+    res.json(req.user);
+});
+
+router.get("/logout", (req, res) => {
+    res.clearCookie("jwt");
+    /* res.status(200).json({status:200, msg:"Logged out"}); */
+    return res.redirect("/home?cierre_de_sesion_ok")
+});
+
 
 
 /* SESION CON GITHUB */
@@ -136,7 +97,7 @@ router.get("/githubcallback", async (req, res) => {
         });
 
         // Si llegamos a este punto, significa que el usuario se autenticó correctamente
-        req.session.user = req.user;
+        
         res.redirect("/api/products?inicioSesion=true");
     } catch (error) {
         // Si se produce un error durante la autenticación, manejarlo aquí
