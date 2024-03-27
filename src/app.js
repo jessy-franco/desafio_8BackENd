@@ -9,9 +9,13 @@ import router from "./routes/sessionRouter.js"
 import viewsRouter from "./routes/viewsRouter.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js"
+import config from "./config/config.js"
 
 
 const app = express();
+
+const PORT = config.port;
+const MONGO_URL = config.mongoUrl;
 
 // View engine
 app.engine('handlebars', engine());
@@ -22,7 +26,7 @@ app.set('views', './src/views');
 
 /* mongodb */
 
-mongoose.connect("mongodb+srv://jesicafranco1518:Seifer1979@cluster0.4oanjkk.mongodb.net/eccomerce?retryWrites=true&w=majority")
+mongoose.connect(MONGO_URL)
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -73,6 +77,6 @@ app.use((req, res, next) => {
     });
 });
 
-app.listen(3000, () => {
-    console.log("servidor 3000!");
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

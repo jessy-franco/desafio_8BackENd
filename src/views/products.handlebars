@@ -8,9 +8,16 @@
 
     </div>
 </section>
-{{!-- {{#if user.admin}} Por alguna razon no funciona. Pendiente de revisar --}}
-<p><a href="/api/products/new"><button class="custom-button">Agregar producto (admin)</button></a></p>
-{{!-- {{/if}} --}}
+{{#if isAdmin}}
+<div>
+    <h1>¡¡¡Bienvenidx {{user.first_name}} {{user.last_name}}!!!</h1>
+    <p>Email: {{user.email}}</p>
+    <img src="/img/imgPages/t-rex.jpg" alt="imagen de bienvenida" width="50%" height="55%">
+    <div><a href="/api/sessions/logout"><button class="custom-button">Cerrar Sesión</button></a></div>
+    <p><a href="/api/products/new"><button class="custom-button">Agregar producto (admin)</button></a></p>
+</div>
+{{/if}}
+
 <h2>Nuestros productos</h2>
 {{/if}}
 
