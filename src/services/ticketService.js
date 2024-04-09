@@ -1,4 +1,4 @@
-import Ticket from '../models/ticketModel.js'; // Importar el modelo Ticket
+import Ticket from '../daos/models/ticket.Schema.js'; // Importar el modelo Ticket
 
 const ticketService = {
     // Función para generar un ticket de compra

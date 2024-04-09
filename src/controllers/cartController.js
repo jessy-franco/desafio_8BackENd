@@ -2,7 +2,7 @@
 import cartRepository from '../repositories/cartRepository.js';
 import productService from '../services/productService.js'; // Servicio para interactuar con el producto
 import ticketService from '../services/ticketService.js'; // Servicio para generar tickets de compra
-import { renderCartView } from '../views/cartView.js';
+
 
 const cartsController = {
     createCart: async (req, res) => {
@@ -19,7 +19,10 @@ const cartsController = {
         try {
             const cartId = req.params.cid;
             const cart = await cartRepository.getCartById(cartId);
-            renderCartView(res, { cart, styles: "cartStyle.css" });
+            res.render("cart", {
+                cart,
+                styles: "cartStyle.css",
+            });
         } catch (error) {
             console.error("Error al obtener carrito por ID:", error);
             res.status(500).send("Error del servidor");

@@ -7,7 +7,7 @@ const productsRouter = express.Router();
 /* ver todos los productos (Funcional) */
 productsRouter.get("/", productsController.getAllProducts);
 
-products.get("/new", isAdmin, (req, res) => {
+productsRouter.get("/new", isAdmin, (req, res) => {
     res.render("new-product", {
         style: "new.css",
     });

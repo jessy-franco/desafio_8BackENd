@@ -50,7 +50,7 @@ const sessionController = {
             console.error("Error al autenticar usuario:", error);
             res.redirect("/login?error=Ocurrió un error durante la autenticación");
         }
-
+        const user = await userRepository.getUserByCredentials(email, password);
         // Verificar si el usuario es administrador
         if (isAdmin(user)) {
             let token = jwt.sign({ isAdmin: true }, process.env.JWT_SECRET, { expiresIn: '1h' });

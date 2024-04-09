@@ -1,5 +1,5 @@
 import UsersDao from '../daos/userDao.js';
-import UserDTO from '../dtos/UserDTO.js';
+import UserDTO from '../dto/userDto.js';
 
 class UserRepository {
     constructor() {

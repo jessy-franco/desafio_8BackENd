@@ -1,7 +1,9 @@
 import Product from "../daos/models/products.schema.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import ProductRepository from '../repositories/productsRepository.js';
 
+const productRepository = new ProductRepository();
 
 const productsController = {
     getAllProducts: async (req, res) => {

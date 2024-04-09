@@ -6,12 +6,6 @@ class UsersDao {
     static async getUserByEmail(email) {
         return await Users.findOne({ email })
     };
-    /* static async getUserByCreds(email, password) {
-        return await Users.findOne({ email, password })
-    };
-    static async insert(userObj) {
-        return await new Users(userObj).save();
-    } */
     static async getUserByCreds(email, password) {
         let user = await Users.findOne({ email }, { _id: 1, first_name: 1, last_name: 1, age: 1, email: 1, password: 1 }).lean();
 
