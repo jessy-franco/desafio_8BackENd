@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
-import UsersDao from "../daos/userDao.js";
+import UserRepository from '../repositories/userRepository.js';
 import {isAdmin} from "../middlewares/auth.middleware.js"
 import * as validators from './validators.js';
 
+const userRepository = new UserRepository();
 
 const sessionController = {
     register: async (req, res) => {
@@ -14,19 +15,18 @@ const sessionController = {
             return res.status(400).json({ status: 400, error: validationResult.error });
         }
 
-        let emailUsed = await UsersDao.getUserByEmail(userData.email);
+        let emailUsed = await UserRepository.getUserByEmail(userData.email);
+
 
         if (emailUsed) {
             return res.status(400).json({ status: 400, error: "Email already used" });
         }
 
-        await UsersDao.insert(userData.first_name, userData.last_name, userData.age, userData.email, userData.password);
+        await UserRepository.createUser(userData);
         return res.redirect("/login?Registro_con_exito_,_puede_iniciar_sesion");
     },
 
     login: async (req, res) => {
-        /* let email = req.body.email;
-        let password = req.body.password; */
         const { email, password } = req.body;
 
         const validation = validators.validateLoginData(email, password);
@@ -35,10 +35,20 @@ const sessionController = {
             return res.redirect(`/login?error=${validation.error}`)
         }
 
-        let user = await UsersDao.getUserByCreds(email, password);
+        try {
+            const user = await userRepository.getUserByCredentials(email, password);
 
-        if (!user) {
-            return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
+            if (!user) {
+                return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
+            }
+
+            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.cookie("jwt", token, { signed: true, httpOnly: true, maxAge: 1000 * 60 * 60 });
+
+            return res.redirect("/api/products?inicioSesion=true");
+        } catch (error) {
+            console.error("Error al autenticar usuario:", error);
+            res.redirect("/login?error=Ocurrió un error durante la autenticación");
         }
 
         // Verificar si el usuario es administrador
@@ -53,7 +63,15 @@ const sessionController = {
         }
     },
     getCurrentUser: (req, res) => {
-        res.json(req.user);
+        try {
+            // Obtener el usuario del objeto `req.user`
+            const user = req.user; // El usuario ya es un UserDTO gracias al UserRepository
+            res.status(200).json(user);
+
+        } catch (error) {
+            console.error('Error al obtener usuario actual:', error);
+            res.status(500).json({ message: 'Error interno del servidor' });
+        }
     },
     logout: (req, res) => {
         res.clearCookie("jwt");
@@ -102,7 +120,7 @@ const sessionController = {
     },
     check:(req, res) => {
         // Obtener el token JWT del encabezado de autorización
-        const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+        const token = req.cookies.jwt
     
         if (!token) {
             return res.status(401).json({ message: 'Acceso no autorizado' });

@@ -4,7 +4,7 @@ import express from "express";
 
 const viewsRouter = express.Router();
 /* registrarse */
-viewsRouter .get("/register", (req,res)=>{
+viewsRouter.get("/register", (req,res)=>{
     res.render("register",{
         style: "style.css"
     })

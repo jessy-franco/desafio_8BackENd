@@ -1,6 +1,6 @@
 import express from "express";
-import products from "./routes/productsRouter.js"
-import carts from "./routes/cartsRouter.js"
+import productsRouter from "./routes/productsRouter.js"
+import  cartsRouter from "./routes/cartsRouter.js"
 import { engine } from 'express-handlebars';
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
@@ -43,8 +43,8 @@ initializePassport();
 app.use(passport.initialize());
 
 // Routers
-const routerproducts = products;
-const routercarts = carts;
+const routerproducts = productsRouter;
+const routercarts =  cartsRouter;
 const routerSession = router;
 
 
