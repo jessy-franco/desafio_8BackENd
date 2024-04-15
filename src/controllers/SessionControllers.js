@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import UserRepository from '../repositories/userRepository.js';
 import {isAdmin} from "../middlewares/auth.middleware.js"
 import * as validators from './validators.js';
+import passport from "passport";
 
 const userRepository = new UserRepository();
 
@@ -41,17 +42,9 @@ const sessionController = {
             if (!user) {
                 return res.redirect("/login?error=Usuario_y/o_contraseña_incorrectas");
             }
+            
 
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.cookie("jwt", token, { signed: true, httpOnly: true, maxAge: 1000 * 60 * 60 });
-
-            return res.redirect("/api/products?inicioSesion=true");
-        } catch (error) {
-            console.error("Error al autenticar usuario:", error);
-            res.redirect("/login?error=Ocurrió un error durante la autenticación");
-        }
-        const user = await userRepository.getUserByCredentials(email, password);
-        // Verificar si el usuario es administrador
+            // Verificar si el usuario es administrador
         if (isAdmin(user)) {
             let token = jwt.sign({ isAdmin: true }, process.env.JWT_SECRET, { expiresIn: '1h' });
             res.cookie("jwt", token, { signed: true, httpOnly: true, maxAge: 1000 * 60 * 60 });
@@ -61,6 +54,17 @@ const sessionController = {
             res.cookie("jwt", token, { signed: true, httpOnly: true, maxAge: 1000 * 60 * 60 });
             return res.redirect("/api/products?inicioSesion=true");
         }
+
+        /*   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.cookie("jwt", token, { signed: true, httpOnly: true, maxAge: 1000 * 60 * 60 });
+
+            return res.redirect("/api/products?inicioSesion=true"); */
+        } catch (error) {
+            console.error("Error al autenticar usuario:", error);
+            res.redirect("/login?error=Ocurrió un error durante la autenticación");
+        }
+        
+        
     },
     getCurrentUser: (req, res) => {
         try {

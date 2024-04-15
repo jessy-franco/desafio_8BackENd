@@ -1,8 +1,8 @@
 {
   "type": "module",
-  "name": "desafio6-backend",
+  "name": "3er_pre_entrega",
   "version": "1.0.0",
-  "description": "desafio6-backend",
+  "description": "3erPreEntrega-backEnd",
   "main": "app.js",
   "scripts": {
     "start": "nodemon src/app.js",
@@ -36,10 +36,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jessy-franco/preEntrega1.git"
+    "url": "git+https://github.com/jessy-franco/3erPreEntrega-backEnd"
   },
   "bugs": {
-    "url": "https://github.com/jessy-franco/preEntrega1/issues"
+    "url": "https://github.com/jessy-franco/3erPreEntrega-backEnd/issues"
   },
-  "homepage": "https://github.com/jessy-franco/preEntrega1#readme"
+  "homepage": "https://github.com/jessy-franco/3erPreEntrega-backEnd#readme"
 }
