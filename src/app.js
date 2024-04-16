@@ -10,7 +10,7 @@ import viewsRouter from "./routes/viewsRouter.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js"
 import config from "./config/config.js"
-
+import { generateProducts } from './services/mockService.js';
 
 const app = express();
 
@@ -75,6 +75,12 @@ app.use((req, res, next) => {
     res.render("404", {
         style: "style.css"
     });
+});
+
+// Endpoint para generar productos falsos
+app.get('/mockingproducts', (req, res) => {
+    const products = generateProducts(100);
+    res.json(products);
 });
 
 app.listen(PORT, () => {

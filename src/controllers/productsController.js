@@ -2,6 +2,7 @@ import Product from "../daos/models/products.schema.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import ProductRepository from '../repositories/productsRepository.js';
+import errorHandler from "../middlewares/errorMiddlewares.js"
 
 const productRepository = new ProductRepository();
 
@@ -52,7 +53,8 @@ const productsController = {
         });
     } catch (error) {
         console.error("Error al obtener productos:", error);
-        res.status(500).json({ status: 500, error: "Internal Server Error" });
+        /* res.status(500).json({ status: 500, error: "Internal Server Error" }); */
+        errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
     }
         
         // Llamar a la función environment para establecer la conexión y obtener los resultados paginados
@@ -103,7 +105,8 @@ const productsController = {
         environment();
         } catch (error) {
             console.error("Error al obtener todos los productos:", error);
-            res.status(500).send("Error interno del servidor");
+            /* res.status(500).send("Error interno del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -113,8 +116,9 @@ const productsController = {
             const product = await productRepository.getProductById(id);
             console.log("id recibido:", id)
             if (!product) {
-                res.status(404).send("El producto no existe");
-                return;
+                /* res.status(404).send("El producto no existe");
+                return; */
+                errorHandler({ code: 'ERROR_404_PRODUCT', message: error.message }, req, res);
             }
             res.render("product", {
                 title: product.title,
@@ -128,7 +132,8 @@ const productsController = {
             });
         } catch (error) {
             console.error("Error al obtener el producto por ID:", error);
-            res.status(500).send("Error interno del servidor");
+            /* res.status(500).send("Error interno del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -165,11 +170,13 @@ const productsController = {
                 res.redirect("/api/products/");
             } else {
                 // Si falta algún campo obligatorio, devuelve un error 400
-                res.status(400).send("Falta completar campos obligatorios")
+                /* res.status(400).send("Falta completar campos obligatorios") */
+                errorHandler({ code: 'MISSING_FIELDS', message: error.message }, req, res);
             }
         } catch (error) {
             console.error("Error al crear un nuevo producto:", error);
-            res.status(500).send("Error interno del servidor");
+            /* res.status(500).send("Error interno del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -181,7 +188,8 @@ const productsController = {
             /* Validar que el producto exista antes de actualizar */
             const product = await productRepository.getProductById(pid);
             if (!product) {
-                return res.status(404).send({ error: "El producto no existe" });
+                /* return res.status(404).send({ error: "El producto no existe" }); */
+                errorHandler({ code: 'ERROR_404_PRODUCT', message: error.message }, req, res);
             }
     
             const updatedProduct = await productRepository.updateProduct(pid, updatedFields);
@@ -192,11 +200,13 @@ const productsController = {
                 res.redirect(`/api/products/${pid}`);
             } else {
                 console.error("El producto no existe");
-                res.status(404).send({ error: "El producto no existe", details: "no se puede actualizar un producto que no existe" });
+                /* res.status(404).send({ error: "El producto no existe", details: "no se puede actualizar un producto que no existe" }); */
+                errorHandler({ code: 'ERROR_404_PRODUCT', message: error.message }, req, res);
             }
         } catch (error) {
             console.error("Error al actualizar el producto por ID:", error);
-            res.status(500).send("Error interno del servidor");
+            /* res.status(500).send("Error interno del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -210,11 +220,13 @@ const productsController = {
             res.status(200).json({ message: "Producto eliminado correctamente", deletedProduct });
         } else {
             console.error("El producto no existe");
-            res.status(404).send("El producto no existe");
+            /* res.status(404).send("El producto no existe"); */
+            errorHandler({ code: 'ERROR_404_PRODUCT', message: error.message }, req, res);
         }
         } catch (error) {
             console.error("Error al eliminar el producto:", error);
-            res.status(404).send({ error: "El producto no puede borrarse", details: "no se puede borrar un producto que no existe" });
+            /* res.status(404).send({ error: "El producto no puede borrarse", details: "no se puede borrar un producto que no existe" }); */
+            errorHandler({ code: 'ERROR_DELETE', message: error.message }, req, res);
         }
     },
 };

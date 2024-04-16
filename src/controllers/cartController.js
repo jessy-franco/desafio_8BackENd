@@ -2,6 +2,7 @@
 import cartRepository from '../repositories/cartRepository.js';
 import productService from '../services/productService.js'; // Servicio para interactuar con el producto
 import ticketService from '../services/ticketService.js'; // Servicio para generar tickets de compra
+import errorHandler from "../middlewares/errorMiddlewares.js"
 
 
 const cartsController = {
@@ -11,7 +12,8 @@ const cartsController = {
             res.status(201).send(cart);
         } catch (error) {
             console.error("Error al crear un nuevo carrito:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -25,7 +27,8 @@ const cartsController = {
             });
         } catch (error) {
             console.error("Error al obtener carrito por ID:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -38,7 +41,8 @@ const cartsController = {
             res.redirect("/api/cart/" + cartId);
         } catch (error) {
             console.error("Error al agregar producto al carrito:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'ADD_TO_CART_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -50,7 +54,9 @@ const cartsController = {
             res.status(204).send();
         } catch (error) {
             console.error("Error al eliminar producto del carrito:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'ERROR_DELETE', message: error.message }, req, res);
+            
         }
     },
 
@@ -62,7 +68,7 @@ const cartsController = {
             res.status(204).send();
         } catch (error) {
             console.error("Error al actualizar carrito con arreglo de productos:", error);
-            res.status(500).send("Error del servidor");
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -75,7 +81,8 @@ const cartsController = {
             res.status(204).send();
         } catch (error) {
             console.error("Error al actualizar cantidad de ejemplares de un producto en el carrito:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -86,7 +93,8 @@ const cartsController = {
             res.status(204).send
         } catch (error) {
             console.error("Error al eliminar todos los productos del carrito:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'ERROR_DELETE', message: error.message }, req, res);
         }
     },
     // Función para completar el proceso de compra del carrito
@@ -123,7 +131,8 @@ const cartsController = {
             });
         } catch (error) {
             console.error("Error al completar la compra del carrito:", error);
-            res.status(500).send("Error del servidor");
+            /* res.status(500).send("Error del servidor"); */
+            errorHandler({ code: 'CHECKOUT_ERROR', message: error.message }, req, res);
         }
     },
 
