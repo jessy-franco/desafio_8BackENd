@@ -14,9 +14,9 @@ const validateEmail = (email) => {
     return emailRegex.test(email);
 };
 
-// Validar que la contraseña tenga al menos 6 caracteres
+// Validar que la contraseña tenga al menos 6 caracteres (cambie a 4, despues hago la conversion a 6)
 const validatePassword = (password) => {
-    return password.length >= 6;
+    return password.length >= 4;
 };
 
 const validateRegistrationData = (userData) => {
