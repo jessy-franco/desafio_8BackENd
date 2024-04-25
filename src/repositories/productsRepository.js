@@ -1,4 +1,5 @@
 import ProductDAO from "../daos/productsDao.js";
+import errorHandler from "../middlewares/errorMiddlewares.js"
 
 class ProductRepository {
     async getAllProducts(filterOptions) {
@@ -13,7 +14,7 @@ class ProductRepository {
 
             return products;
         } catch (error) {
-            throw new Error("Error al obtener todos los productos");
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     }
 
@@ -22,7 +23,7 @@ class ProductRepository {
             const product = await ProductDAO.getById(id);
             return product;
         } catch (error) {
-            throw new Error(`Error al obtener el producto por ID: ${id}`);
+            errorHandler({ code: 'ERROR_GET_PRODUCT_ID', message: error.message }, req, res);
         }
     }
 
@@ -30,7 +31,7 @@ class ProductRepository {
         try {
             await ProductDAO.add(productData);
         } catch (error) {
-            throw new Error("Error al crear un nuevo producto");
+            errorHandler({ code: 'PRODUCT_CREATE_ERROR', message: error.message }, req, res);
         }
     }
 
@@ -38,13 +39,13 @@ class ProductRepository {
         try {
             const product = await ProductDAO.getById(productId);
             if (!product) {
-                throw new Error(`El producto con ID ${productId} no existe`);
+                errorHandler({ code: 'ERROR_UPDATE_PRODUCT_ID', message: error.message }, req, res);
             }
 
             const updatedProduct = await ProductDAO.update(productId, updatedFields);
             return updatedProduct;
         } catch (error) {
-            throw new Error(`Error al actualizar el producto por ID: ${productId}`);
+            errorHandler({ code: 'ERROR_UPDATE_PRODUCT_ID', message: error.message }, req, res);
         }
     }
 
@@ -53,7 +54,7 @@ class ProductRepository {
             const deletedProduct = await ProductDAO.remove(productId);
             return deletedProduct;
         } catch (error) {
-            throw new Error(`Error al eliminar el producto por ID: ${productId}`);
+            errorHandler({ code: 'ERROR_DELETE', message: error.message }, req, res);
         }
     }
 }

@@ -1,3 +1,5 @@
+import { addLogger } from "../utils/logger.js";
+
 
 const errorDictionary = {
     PRODUCT_CREATE_ERROR: 'Error al crear un nuevo producto.',
@@ -8,13 +10,36 @@ const errorDictionary = {
     ERROR_404_PRODUCT:'El producto no existe',
     MISSING_FIELDS:'Falta completar campos obligatorios',
     ERROR_DELETE:'El producto no puede borrarse',
+    ERROR_CART_ID: 'Error al obtener carrito por ID',
+    ERROR_DELETE_PRODUCT_TO_CART: 'Error al eliminar producto del carrito',
+    ERROR_UPDATE_CART_PRODUCTS:'Error al actualizar carrito con arreglo de productos',
+    ERROR_UPDATE_PRODUCTS_QUANTITY:'Error al actualizar cantidad de ejemplares de un producto en el carrito',
+    ERROR_DELETE_PRODUCTS_TO_CART:'Error al eliminar todos los productos del carrito',
+    ERROR_CREATE_CART:'Error al crear un nuevo carrito',
+    ERROR_GET_PRODUCT_ID:'Error al obtener el producto por ID: ${id}',
+    ERROR_UPDATE_PRODUCT_ID: 'El producto con ID ${productId} no existe',
+    ERROR_CREATE_TICKET: 'Error al crear un nuevo ticket',
+    ERROR_UPDATE_STOCK_PRODUCT:'Error al actualizar el stock del producto',
+    ERROR_TOKEN:'token invalido, error',
 };
 
 function errorHandler(err, req, res, next) {
     const errorCode = err.code || 'UNKNOWN_ERROR';
     const errorMessage = errorDictionary[errorCode] || 'Error desconocido.';
-    console.error('Error:', errorMessage);
-    res.status(500).json({ error: errorMessage });
+    /* Obtiene el logger */
+    const logger = req.logger;
+
+    /* Registra el error  */
+    logger.error(`Error: ${errorMessage}`, { error: err });
+
+    /* Enviar una respuesta según el entorno */ 
+    if (process.env.NODE_ENV === 'prod') {
+        res.status(500).json({ error: 'Error desconocido.' });
+        logger.error('Este es un mensaje de error');
+    } else {
+        res.status(500).json({ error: errorMessage });
+        logger.error('Este es un mensaje de error');
+    }
 }
 
 export default errorHandler;

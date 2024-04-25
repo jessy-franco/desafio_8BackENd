@@ -14,7 +14,7 @@ const sessionController = {
 
         const validationResult = validators.validateRegistrationData(userData);
 
-        if (!validationResult.success) {
+        if (validationResult.error) {
             return res.status(400).json({ status: 400, error: validationResult.error });
         }
 
@@ -22,7 +22,7 @@ const sessionController = {
 
 
         if (emailUsed) {
-            return res.status(400).json({ status: 400, error: "Email already used" });
+            return res.status(400).json({ status: 400, error: "Email ya esta registrado" });
         }
 
         await UserRepository.createUser(userData);
@@ -57,10 +57,6 @@ const sessionController = {
             return res.redirect("/api/products?inicioSesion=true");
         }
 
-        /*   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-            res.cookie("jwt", token, { signed: true, httpOnly: true, maxAge: 1000 * 60 * 60 });
-
-            return res.redirect("/api/products?inicioSesion=true"); */
         } catch (error) {
             console.error("Error al autenticar usuario:", error);
             res.redirect("/login?error=Ocurrió un error durante la autenticación");
@@ -81,7 +77,6 @@ const sessionController = {
     },
     logout: (req, res) => {
         res.clearCookie("jwt");
-        /* res.status(200).json({status:200, msg:"Logged out"}); */
         return res.redirect("/home?cierre_de_sesion_ok")
     },
     authenticateWithGithub: (req, res, next) => {

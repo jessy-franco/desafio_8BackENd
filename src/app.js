@@ -1,6 +1,7 @@
 import express from "express";
 import productsRouter from "./routes/productsRouter.js"
 import  cartsRouter from "./routes/cartsRouter.js"
+import  loggerRouter from "./routes/loggerRouter.js"
 import { engine } from 'express-handlebars';
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
@@ -9,13 +10,13 @@ import router from "./routes/sessionRouter.js"
 import viewsRouter from "./routes/viewsRouter.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js"
-import config from "./config/config.js"
+import {environment} from "./config/config.js"
 import { generateProducts } from './services/mockService.js';
+import { addLogger} from "./utils/logger.js";
 
 const app = express();
 
-const PORT = config.port;
-const MONGO_URL = config.mongoUrl;
+
 
 // View engine
 app.engine('handlebars', engine());
@@ -26,7 +27,7 @@ app.set('views', './src/views');
 
 /* mongodb */
 
-mongoose.connect(MONGO_URL)
+mongoose.connect(environment.mongoUrl)
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -41,11 +42,13 @@ app.use(express.static("./src/public"));
 app.use(cookieParser("cookieS3cR3tC0D3"));
 initializePassport();
 app.use(passport.initialize());
+app.use(addLogger)
 
 // Routers
 const routerproducts = productsRouter;
 const routercarts =  cartsRouter;
 const routerSession = router;
+const routerLogger = loggerRouter;
 
 
 
@@ -53,13 +56,17 @@ app.use("/api/products", routerproducts)
 app.use("/api/carts", routercarts)
 app.use("/api/sessions", routerSession)
 app.use("/", viewsRouter)
+app.use("/loggerTest", routerLogger)
 
 
 // Home del sitio
 app.get("/", (req, res) => {
     res.redirect("/home");
 });
-
+app.get("/loggerTest", (req, res) => {
+    req.logger.error("no se pudo renderizar la pagina");
+    res.send({message: "prueba de logger"})
+}); 
 app.get("/home", (req, res) => {
     res.render("home", {
         style: "style.css"
@@ -83,6 +90,7 @@ app.get('/mockingproducts', (req, res) => {
     res.json(products);
 });
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+const PORT = environment.port || 3000;
+app.listen(PORT , () => {
+    console.log(`Servidor corriendo en el puerto ${PORT }`);
 });

@@ -1,4 +1,5 @@
 import Product from "../daos/models/products.schema.js";
+import errorHandler from "../middlewares/errorMiddlewares.js"
 
 class ProductDAO {
     static async getAll() {
@@ -15,7 +16,7 @@ class ProductDAO {
             return newProduct.toObject();
         } catch (error) {
             console.error("Error al agregar producto en ProductDAO.add:", error);
-            throw error;
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     }
 
@@ -27,12 +28,12 @@ class ProductDAO {
         try {
             const updatedProduct = await Product.findByIdAndUpdate(_id, newData, { new: true });
             if (!updatedProduct) {
-                throw new Error("Producto no encontrado");
+                errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
             }
             return updatedProduct.toObject();
         } catch (error) {
             console.error("Error al actualizar producto:", error);
-            throw error;
+            errorHandler({ code: 'ERROR_UPDATE_PRODUCT_ID', message: error.message }, req, res);
         }
     }
 
@@ -40,12 +41,12 @@ class ProductDAO {
         try {
             const deletedProduct = await Product.findByIdAndDelete(id);
             if (!deletedProduct) {
-                throw new Error("Producto no encontrado");
+                errorHandler({ code: 'ERROR_DELETE', message: error.message }, req, res);
             }
             return deletedProduct.toObject();
         } catch (error) {
             console.error("Error al eliminar producto:", error);
-            throw error;
+            errorHandler({ code: 'ERROR_DELETE', message: error.message }, req, res);
         }
     }
 }

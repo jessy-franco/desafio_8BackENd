@@ -35,7 +35,14 @@ const productsController = {
             nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}` : '',
             isValid: !(page <= 0 || page > result.totalPages)
         };
-        try {
+        
+        res.render("products", {
+            products: products,
+            pagination,
+            style: "products.css"
+        });
+        /* Get all products sin jwt para que el cliente pueda ver los productos independientemente  de si esta logueado o no */
+     /*    try {
             const token = req.signedCookies.jwt;
             if (!token) {
                 res.redirect("/login");
@@ -54,9 +61,9 @@ const productsController = {
     } catch (error) {
         console.error("Error al obtener productos:", error);
         /* res.status(500).json({ status: 500, error: "Internal Server Error" }); */
-        errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
+       /*  errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
     }
-        
+         */
         // Llamar a la función environment para establecer la conexión y obtener los resultados paginados
         const environment = async () => {
             await mongoose.connect("mongodb+srv://jesicafranco1518:Seifer1979@cluster0.4oanjkk.mongodb.net/eccomerce?retryWrites=true&w=majority");

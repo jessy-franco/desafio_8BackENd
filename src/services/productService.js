@@ -1,4 +1,5 @@
 import ProductDAO from '../daos/productsDao.js'; 
+import errorHandler from "../middlewares/errorMiddlewares.js"
 
 const productService = {
     // Función para obtener un producto por su ID
@@ -8,7 +9,7 @@ const productService = {
             return product;
         } catch (error) {
             console.error(`Error al obtener el producto por ID (${productId}):`, error);
-            throw new Error("Error al obtener el producto");
+            errorHandler({ code: 'INTERNAL_SERVER_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -18,7 +19,8 @@ const productService = {
             await ProductDAO.updateStock(productId, newStock);
         } catch (error) {
             console.error(`Error al actualizar el stock del producto (${productId}):`, error);
-            throw new Error("Error al actualizar el stock del producto");
+            errorHandler({ code: 'ERROR_UPDATE_STOCK_PRODUCT', message: error.message }, req, res);
+            
         }
     }
 };

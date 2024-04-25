@@ -21,15 +21,15 @@ const validatePassword = (password) => {
 
 const validateRegistrationData = (userData) => {
     const { first_name, last_name, email, age, password } = userData;
-
+    let error = null;
     // Verificar si se proporcionan todos los campos
     if (!first_name || !last_name || !email || !age || !password) {
-        CustomError.createError({
+        error = {
             name: "Error de registro",
             cause: generateUserErrorInfo({ first_name, last_name, age, email }),
             message: "Ingrese todos los campos",
             code: EErrors.INVALID_TYPES_ERROR
-        })
+        }
     }
 
     // Validar que la edad sea un número válido
@@ -41,22 +41,22 @@ const validateRegistrationData = (userData) => {
     // Utilizar las funciones de validación exportadas
     if (!validateEmail(email)) {
         /* return { success: false, error: "Invalid email format" }; */
-        CustomError.createError({
+        error = {
             name: "Error de registro",
             cause: generateUserErrorEmail({ email }),
             message: "Formato invalido",
             code: EErrors.INVALID_TYPES_ERROR
-        })
+        }
     }
 
     if (!validatePassword(password)) {
         /* return { success: false, error: "Password must be at least 6 characters long" }; */
-        CustomError.createError({
+        error = {
             name: "Error de registro",
             cause: generateUserErrorPassword({ password }),
-            message: "El password debe tener mas de 6 caracteres",
+            message: "El password debe tener 4 o mas caracteres",
             code: EErrors.INVALID_TYPES_ERROR
-        })
+        }
     }
 
     return { success: true };

@@ -1,4 +1,5 @@
 import { CartManager } from "../daos/cartDao.js";
+import errorHandler from "../middlewares/errorMiddlewares.js"
 
 const cartManager = new CartManager();
 
@@ -7,7 +8,7 @@ const cartRepository = {
         try {
             return await cartManager.createCart();
         } catch (error) {
-            throw new Error("Error al crear un nuevo carrito");
+            errorHandler({ code: 'ERROR_CREATE_CART', message: error.message }, req, res);
         }
     },
 
@@ -19,7 +20,7 @@ const cartRepository = {
             }
             return cart;
         } catch (error) {
-            throw new Error("Error al obtener carrito por ID");
+            errorHandler({ code: 'ERROR_CART_ID', message: error.message }, req, res);
         }
     },
 
@@ -27,7 +28,7 @@ const cartRepository = {
         try {
             await cartManager.addProductToCart(cartId, productId, quantity);
         } catch (error) {
-            throw new Error("Error al agregar producto al carrito");
+            errorHandler({ code: 'ADD_TO_CART_ERROR', message: error.message }, req, res);
         }
     },
 
@@ -35,7 +36,7 @@ const cartRepository = {
         try {
             await cartManager.removeProductFromCart(cartId, productId);
         } catch (error) {
-            throw new Error("Error al eliminar producto del carrito");
+            errorHandler({ code: 'ERROR_DELETE_PRODUCT_TO_CART', message: error.message }, req, res);
         }
     },
 
@@ -43,7 +44,7 @@ const cartRepository = {
         try {
             await cartManager.updateCartProducts(cartId, products);
         } catch (error) {
-            throw new Error("Error al actualizar carrito con arreglo de productos");
+            errorHandler({ code: 'ERROR_UPDATE_CART_PRODUCTS', message: error.message }, req, res);
         }
     },
 
@@ -51,7 +52,7 @@ const cartRepository = {
         try {
             await cartManager.updateProductQuantity(cartId, productId, quantity);
         } catch (error) {
-            throw new Error("Error al actualizar cantidad de ejemplares de un producto en el carrito");
+            errorHandler({ code: 'ERROR_UPDATE_PRODUCTS_QUANTITY', message: error.message }, req, res);
         }
     },
 
@@ -59,7 +60,7 @@ const cartRepository = {
         try {
             await cartManager.clearCart(cartId);
         } catch (error) {
-            throw new Error("Error al eliminar todos los productos del carrito");
+            errorHandler({ code: 'ERROR_DELETE_PRODUCTS_TO_CART', message: error.message }, req, res);
         }
     }
 };

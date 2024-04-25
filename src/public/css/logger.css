@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2? family= Raleway:ital@1 & display=swap');
+
+html {
+    /* font-family: 'EB Garamond', serif; */
+    font-family: 'Raleway', sans-serif;
+    font-size: 62, 5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+/* inicia header */
+header {
+    font-family: 'EB Garamond', serif;
+}
+
+.encabezado .divColor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: green;
+}
+
+.talleLetra li a {
+    font-size: 1.2rem;
+}
+
+.logoNav {
+    visibility: hidden;
+}
+
+.flexCenter {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding-right: 23% !important
+}
+
+.encabezado .divColor h1 {
+    text-align: center;
+    font-size: 3rem;
+    font-style: italic;
+    color: #52734D;
+}
+
+.encabezado .divColor img {
+    padding: 5% 0% 5% 0%;
+}
+
+
+body .zona-1 {
+    width: 100%;
+    height: auto;
+}
+
+
+/* aplica a: .background-nav/ */
+.background-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+
+
+.fndoForm {
+    background-image: url(https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Frevistaindependientes.com%2Fwp-content%2Fuploads%2F2018%2F06%2Fplantas_medicinales-1024x683.jpg&f=1&nofb=1&ipt=0a7db7bceaee5164acf9ab307136264ff72d319f68aba4991b88013c9e935942&ipo=images);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.zona-6 .mini-grid {
+    display: grid;
+    grid-template-columns: 650px 1fr;
+    grid-auto-rows: auto;
+    grid-template-areas: "redes mapa";
+    overflow-x: hidden;
+}
+
+.zona-6 .mini-grid .redes div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.zona-6 .mini-grid .redes {
+    grid-area: redes;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 100%;
+    height: auto;
+    background-color: #FEFFDE;
+}
+
+.zona-6 .mini-grid .redes h3 {
+    color: #52734D;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.6rem;
+    font-size: 2rem;
+    padding: 8% 5%;
+}
+
+.zona-6 .mini-grid .redes div a {
+    padding: 10%;
+    align-items: center;
+}
+
+.zona-6 .mini-grid .mapa {
+    grid-area: mapa;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    padding: 5% 10%;
+    background-color: rgba(173, 194, 169, 0.7568627451);
+    width: 100%;
+    height: auto;
+}
+
+.zona-6 .mini-grid .mapa div {
+    width: 100%;
+    height: auto;
+}
+
+.zona-6 .mini-grid .mapa div h3 {
+    text-align: center;
+    color: green;
+    font-style: italic;
+    margin-right: 15%;
+    padding-bottom: 6%;
+    line-height: 2.5rem;
+}
+
+.zona-6 .mini-grid .mapa div iframe {
+    width: 80%;
+    height: 60%;
+    margin-right: 15%;
+}
+
+.zona-6 .pie {
+    background-color: #99A799;
+    line-height: 1.6rem;
+}
+
